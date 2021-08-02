@@ -1,5 +1,7 @@
 # project-mid-vue
 
+## !!! Don't forget to install Axios !!!
+
 ## Project setup
 ```
 npm install
