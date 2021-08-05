@@ -36,7 +36,6 @@ export default{
     },
     async login( { email, password } ){
         //call Post /auth/local
-        console.log(password);
         try{
             let url = api_endpoint + "/auth/local"
             let body = {
@@ -77,7 +76,7 @@ export default{
             }
         }
     },
-    logout(){
+    async logout(){
         localStorage.removeItem(auth_key)
     },
     async register({username, email, password}){

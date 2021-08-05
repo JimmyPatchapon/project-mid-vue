@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img v-if="!isAuthen()" alt="Vue logo" src="../assets/logo.png">
+    <img v-if="isAuthen()" alt="Vue logo" src="http://localhost:1337/uploads/badfallen_d19d4214fd.png">
+
     <HelloWorld v-if="isAuthen()" msg="Don't forget to install modules"/>
-    <HelloWorld></HelloWorld>
+    <HelloWorld v-if="!isAuthen()"></HelloWorld>
   </div>
 </template>
 

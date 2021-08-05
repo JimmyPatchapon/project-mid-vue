@@ -37,7 +37,7 @@ export default new Vuex.Store({
             }
             return res
         },
-        logout() {
+        async logout({ commit }) {
             AuthService.logout()
             commit("logoutSuccess")
         },
