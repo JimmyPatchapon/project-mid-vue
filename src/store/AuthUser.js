@@ -53,6 +53,7 @@ export default new Vuex.Store({
         user: (state) => state.user,
         jwt: (state) => state.jwt,
         isAuthen: (state) => state.isAuthen,
+        
 
     },
     modules: {},

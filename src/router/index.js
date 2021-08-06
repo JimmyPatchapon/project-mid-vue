@@ -5,14 +5,15 @@ import Logout from "@/views/auth/Logout"
 import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
+import Home from "@/views/Home"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Shop
+    name: 'Homepage',
+    component: Home
   },
   {
     path: '/logout',
