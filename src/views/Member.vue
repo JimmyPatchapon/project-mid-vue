@@ -2,18 +2,28 @@
   <div>
     <aside>
       <img src="@/assets/logo.png" alt="">
-      <div>Username</div>
-      <div>Point now</div>
+      <div>{{user.username}}</div>
+      <div class="email">[ {{user.email}} ]</div>
+      <div>{{user.Points}}</div>
     </aside>
     <point-table></point-table>
   </div>
 </template>
 
 <script>
+import AuthUser from '@/store/AuthUser'
 import PointTable from '@/components/PointTable'
 export default {
   components: {
     PointTable
+  },
+  data() {
+    return {
+      user: ''
+    }
+  },
+  created() {
+    this.user = AuthUser.getters.user
   }
 }
 </script>
@@ -27,5 +37,8 @@ aside {
   margin: 10px;
   margin-right: 50px;
   padding: 20px 0;
+}
+.email {
+  font-size: 0.75em;
 }
 </style>>

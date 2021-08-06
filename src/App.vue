@@ -4,14 +4,25 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/leaderboard">Leaderboard</router-link> |
-      <router-link to="/member">Member</router-link> |
-      <router-link to="/login">Login</router-link> | 
-      <router-link to="/logout">Logout</router-link> |
-      <router-link to="/register">Register</router-link>
+      <router-link v-if="!isAuthen()" to="/register">Register</router-link>
+      <router-link v-if="isAuthen()" to="/member">Member</router-link> |
+      <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
+      <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import AuthUser from '@/store/AuthUser'
+export default {
+  methods: {
+    isAuthen() {
+      return AuthUser.getters.isAuthen
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
