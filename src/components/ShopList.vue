@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="card" v-for="i in items" :key="i"><router-link :to="{name:'ShopItem', params:{name: i}}">
+    <a class="card" v-for="i in items" :key="i"><router-link :to="{name:'ShopItem', params:{id: i.id}}">
       <img :src="createUrl(i.picture.url)" alt="">
       <div>{{i.name}}</div>
       <div>{{i.prices}}</div>
@@ -41,6 +41,7 @@ div {
   background-color: antiquewhite;
   border-radius: 10px;
   margin: 10px;
+  padding: 20px 0;
   text-align: center;
 }
 router-link {
@@ -51,8 +52,10 @@ router-link {
   display: inline-block;
   text-align: center;
   font-size: 25px;
+  color: black;
 }
 img {
   width: 200px;
+  margin-bottom: 10px;
 }
 </style>
