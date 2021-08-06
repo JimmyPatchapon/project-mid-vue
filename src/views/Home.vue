@@ -40,7 +40,6 @@ export default {
       let logging = AuthUser.getters.user
       console.log(logging);
       console.log(logging.points);
-
     }
   }
 }
