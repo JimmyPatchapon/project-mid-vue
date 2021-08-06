@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Shop</h1>
     <shop-list></shop-list>
   </div>
 </template>

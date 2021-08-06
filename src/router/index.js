@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Login from "@/views/auth/Login"
 import Logout from "@/views/auth/Logout"
 import Leaderboard from "@/views/Leaderboard"
@@ -13,7 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Shop
   },
   {
     path: '/logout',
@@ -29,11 +28,6 @@ const routes = [
     path: '/leaderboard',
     name: 'Leaderboard',
     component: Leaderboard
-  },
-  {
-    path: '/shop',
-    name: 'Shop',
-    component: Shop
   },
   {
     path: '/shop/:name',
