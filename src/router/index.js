@@ -5,6 +5,7 @@ import Logout from "@/views/auth/Logout"
 import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
+import Member from '@/views/Member'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/shop/:id',
     name: 'ShopItem',
     component: ShopItem
+  },
+  {
+    path: '/member',
+    name: 'ShopItemMember',
+    component: Member
   },
   {
     path: '/about',
