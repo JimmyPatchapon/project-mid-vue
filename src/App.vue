@@ -4,8 +4,10 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/leaderboard">Leaderboard</router-link> |
+      <router-link to="/member">Member</router-link> |
       <router-link to="/login">Login</router-link> | 
-      <router-link to="/logout">Logout</router-link>
+      <router-link to="/logout">Logout</router-link> |
+      <router-link to="/register">Register</router-link>
     </div>
     <router-view/>
   </div>
