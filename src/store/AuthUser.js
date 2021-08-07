@@ -16,16 +16,18 @@ const initialState = {
 export default new Vuex.Store({
     state: initialState,
     mutations: {
-        loginSuccess (state,user,jwt)
+        async loginSuccess (state,user,jwt)
         {
             state.user = user
             state.jwt = jwt
             state.isAuthen = true
+            state.isAdmin =  AuthService.isAdministration()
         },
         logoutSuccess (state) {
             state.user = ""
             state.jwt = ""
             state.isAuthen = false
+            state.isAdmin = false
         }
     },
     actions: {
@@ -54,8 +56,8 @@ export default new Vuex.Store({
         user: (state) => state.user,
         jwt: (state) => state.jwt,
         isAuthen: (state) => state.isAuthen,
+        isAdmin: (state) => state.isAdmin,
         
-
     },
     modules: {},
 })
