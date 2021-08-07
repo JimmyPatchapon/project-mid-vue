@@ -1,8 +1,5 @@
 <template>
   <div>
-      <h1>for admin</h1>
-      <p>table of users and points in a given date range</p>
-      <p>sort by points and accuPoints</p>
       <table>
       <thead>
         <tr>
@@ -21,7 +18,7 @@
         </tr>
       </tbody>
     </table>
-      <p> Need to fix Admin localStorage key</p>
+    <br><br>
       {{ users }}
   </div>
 </template>
@@ -50,7 +47,6 @@ export default {
     },
     created(){
         this.fetchUsers()
-        console.log(this.isAdmin());
         if(!this.isAdmin()) {
             this.$swal("You have no permission","","warning")
             this.$router.push("/")

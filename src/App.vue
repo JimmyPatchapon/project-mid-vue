@@ -4,12 +4,14 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link v-if="isAdmin()" to="/leaderboard">Leaderboard</router-link>
+      <span v-if="isAdmin()"> |</span> 
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
       <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
-      <router-link v-if="isAuthen()" to="/logout">Logout |</router-link> 
-      <router-link v-if="isAuthen()" to="/eventList">Event List |</router-link> 
-      <router-link v-if="isAuthen()" to="/reward">Reward</router-link>
+      <router-link v-if="isAuthen()" to="/eventList">Event List | </router-link> 
+      <router-link v-if="isAuthen()" to="/reward">Reward | </router-link>
+      <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
+      <button @click="logSomething()">Log</button>
     </div>
     <router-view/>
   </div>
@@ -18,14 +20,18 @@
 <script>
 
 import AuthUser from '@/store/AuthUser'
-import AuthService from '@/services/AuthService'
 export default {
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen
     },
     isAdmin() {
-      return AuthService.isAdministration()
+      return AuthUser.getters.isAdmin
+    },
+    async logSomething(){
+      console.log(AuthUser.getters.isAuthen);
+      console.log(AuthUser.getters.isAdmin);
+      console.log(await AuthUser.getters.user);
     }
   }
 }
@@ -50,6 +56,9 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+  span {
+    margin-right: 4px;
   }
 }
 </style>
