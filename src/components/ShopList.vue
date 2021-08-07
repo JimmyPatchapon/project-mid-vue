@@ -1,6 +1,5 @@
 <template>
   <div>
-    ABC
     <a class="card" v-for="i in items" :key="i"><router-link :to="{name:'ShopItem', params:{id: i.id}}">
       <img :src="createUrl(i.picture.url)" alt="">
       <div>{{i.name}}</div>

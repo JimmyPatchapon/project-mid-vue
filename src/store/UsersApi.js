@@ -29,6 +29,11 @@ export default new Vuex.Store({
         let header = AuthService.getApiHeader()
         let res = await Axios.get(api_endpoint + "/users", header)
         commit("fetch", { res })
+    },
+    async fetchAuthenticated( { commit }){
+        let header = AuthService.getApiHeader()
+        let res = await Axios.get(api_endpoint + "/users?role.name=Authenticated", header)
+        commit("fetch", { res })
     }
   },
   modules: {
