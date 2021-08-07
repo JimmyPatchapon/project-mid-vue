@@ -11,7 +11,7 @@
       <router-link v-if="isAuthen()" to="/eventList">Event List | </router-link> 
       <router-link v-if="isAuthen()" to="/reward">Reward | </router-link>
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
-      <button @click="logSomething()">Log</button>
+      <!-- <button @click="logSomething()">Log</button> -->
     </div>
     <router-view/>
   </div>
@@ -20,6 +20,7 @@
 <script>
 
 import AuthUser from '@/store/AuthUser'
+import AuthService from '@/services/AuthService'
 export default {
   methods: {
     isAuthen() {
@@ -28,11 +29,11 @@ export default {
     isAdmin() {
       return AuthUser.getters.isAdmin
     },
-    async logSomething(){
-      console.log(AuthUser.getters.isAuthen);
-      console.log(AuthUser.getters.isAdmin);
-      console.log(await AuthUser.getters.user);
-    }
+    // logSomething(){
+    //   console.log(AuthUser.getters.isAuthen);
+    //   console.log(AuthUser.getters.isAdmin);
+    //   console.log(AuthUser.getters.user);
+    // }
   }
 }
 </script>

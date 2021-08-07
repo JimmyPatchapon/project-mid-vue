@@ -1,8 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import AuthService from "@/services/AuthService"
-
-
 Vue.use(Vuex)
 
 const auth_key = "auth-user"
@@ -23,7 +21,7 @@ export default new Vuex.Store({
             state.user = user
             state.jwt = jwt
             state.isAuthen = true
-            state.isAdmin =  AuthService.isAdministration()
+            state.isAdmin = user.role.name === "Administration"
         },
         logoutSuccess (state) {
             state.user = ""
@@ -32,24 +30,41 @@ export default new Vuex.Store({
             state.isAdmin = false
         }
     },
-    actions:{
-        async login({commit}, {email, password}){
-            let res = await AuthService.login({email, password})
-            if(res.succes){
-                commit('loginSuccess', res.user, res.jwt)
+    actions: {
+        async login({ commit }, {email, password})
+        {
+            let res = await AuthService.login({ email, password })
+            if (res.success){
+                commit("loginSuccess",res.user,res.jwt)
             }
             return res
         },
-        logout(){
+        async logout({ commit }) {
             AuthService.logout()
-            this.commit('logoutSuccess')
+            commit("logoutSuccess")
+        },
+        async register ({ commit }, {username, email, password })
+        {
+            let res = await AuthService.register({username,email,password})
+            if (res.success) {
+                commit("loginSuccess",res.user,res.jwt)
+            }
+            return res
+        },
+        async editPoint({ commit }, {username, points}){
+            let res = await AuthService.editPoint({username,points})
+            if(res.success){
+                commit("editSuccess")
+            }
+            return res
         }
     },
-    getters:{
+    getters: {
         user: (state) => state.user,
         jwt: (state) => state.jwt,
         isAuthen: (state) => state.isAuthen,
-        isAdmin: (state) => state.isAdmin, 
+        isAdmin: (state) => state.isAdmin,
+
     },
-    modules:{}
+    modules: {},
 })

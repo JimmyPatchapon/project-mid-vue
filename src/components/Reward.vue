@@ -13,7 +13,7 @@
                     <td>{{ index + 1 }}</td>
                     <td>{{ reward.name_reward }}</td>
                     <td>{{ reward.require_points }}</td>
-                    <button @click="redeem">Exchange</button>
+                    <button @click="redeem(index)">Exchange</button>
                 </tr>
             </tbody>
         </table>
@@ -24,7 +24,7 @@
 <script>
 import rewardApi from "@/store/RewardApi"
 import AuthUser from "@/store/AuthUser"
-
+import UserApi from "@/store/UsersApi"
 
 export default {
     data(){
@@ -45,12 +45,27 @@ export default {
             this.rewards = rewardApi.getters.rewards
         },
         async getPoint(){
-            await AuthUser.dispatch("getPoint")
             console.log(AuthUser.getters.user)
             this.points = AuthUser.getters.user.points
         },
-        redeem(){
-            this.points-=this.require_points
+        redeem(index){
+            if(this.points>=this.rewards[index].require_points){
+                this.points-=this.rewards[index].require_points 
+                this.usePoint()
+                
+            }else{
+                this.$swal("Your points are not enough","", "error")
+                console.log("bla");
+            }  
+            
+        },
+        async usePoint() {
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            console.log(payload);
+            await UserApi.dispatch("editPoint", payload)
         }
     }
 }
