@@ -92,6 +92,16 @@ export default{
                 password: password
             }
             let res = await Axios.post(url,body)
+            if(res.status === 200) {
+                localStorage.setItem(auth_key, JSON.stringify(res.data))
+                return {
+                    success: true,
+                    user: res.data.user,
+                    jwt: res.data.jwt
+                }
+            } else {
+                console.log("NOT 200", res)
+            }
         } catch (e) {
             if(e.response.status === 400){
                 //console.error(e.response.data.message[0].messages[0].message);
