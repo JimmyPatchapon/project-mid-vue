@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/leaderboard">Leaderboard</router-link> |
+      <router-link v-if="isAdmin()" to="/leaderboard">Leaderboard</router-link>
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
       <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
@@ -16,10 +16,14 @@
 <script>
 
 import AuthUser from '@/store/AuthUser'
+import AuthService from '@/services/AuthService'
 export default {
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen
+    },
+    isAdmin() {
+      return AuthService.isAdministration()
     }
   }
 }

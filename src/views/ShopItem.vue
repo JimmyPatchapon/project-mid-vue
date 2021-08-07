@@ -10,12 +10,13 @@
       <button @click="increase">+</button>
     </div>
     <div>in stock: {{item.quantity}}</div><br>
-    <button>Buy</button>
+    <button @click="buy">Buy</button>
   </div>
 </template>
 
 <script>
 import ShopService from '@/services/ShopService'
+import ItemStore from '@/store/Item'
 export default {
   data() {
     return {
@@ -30,7 +31,8 @@ export default {
   },
   methods: {
     createUrl(pictureUrl) {
-      return "http://localhost:1337" + pictureUrl
+      let api_endpoint = process.env.VUE_APP_POKEDEX_ENDPOINT || "http://localhost:1337"
+      return api_endpoint + pictureUrl
     },
     increase() {
       if(this.number < this.item.quantity)
@@ -39,6 +41,25 @@ export default {
     decrease() {
       if(this.number > 1)
         this.number--
+    },
+    async buy() {
+      let payload = {
+        id: this.id,
+        quantity: this.item.quantity - this.number
+      }
+      let res1 = await ItemStore.dispatch('editItemQuantity', payload)
+      let res2 = await ShopService.purchase(this.id, this.number)
+      let res3 = await ShopService.receivePoint(this.item.name, this.item.prices*this.number)
+      if(res1.success & res2.success & res3.success) {
+        this.$swal("Buy Success", this.item.name+" x"+this.number, "success")
+        this.$router.push("/")
+      } else if(!res1.success) {
+        this.$swal("Buy Failed", res1.message, "error")
+      } else if(!res2.success) {
+        this.$swal("Buy Failed", res2.message, "error")
+      } else {
+        this.$swal("Buy Failed", res3.message, "error")
+      }
     }
   }
 }

@@ -45,7 +45,7 @@ const routes = [
   },
   {
     path: '/member',
-    name: 'ShopItemMember',
+    name: 'Member',
     component: Member
   },
   {

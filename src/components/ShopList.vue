@@ -25,7 +25,8 @@ export default {
       this.items = ItemStore.getters.items
     },
     createUrl(pictureUrl) {
-      return "http://localhost:1337" + pictureUrl
+      let api_endpoint = process.env.VUE_APP_POKEDEX_ENDPOINT || "http://localhost:1337"
+      return api_endpoint + pictureUrl
     }
   }
 }

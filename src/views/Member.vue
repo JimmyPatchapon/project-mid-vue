@@ -24,6 +24,15 @@ export default {
   },
   created() {
     this.user = AuthUser.getters.user
+    if(!this.isAuthen()) {
+      this.$swal("Restricted Area", "You have no permission","warning")
+      this.$router.push("/")
+    }
+  },
+  methods: {
+    isAuthen() {
+      return AuthUser.getters.isAuthen
+    }
   }
 }
 </script>
