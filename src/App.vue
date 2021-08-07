@@ -8,6 +8,8 @@
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
       <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
+      <router-link v-if="isAuthen()" to="/eventList">Event List | </router-link> 
+      <router-link v-if="isAuthen()" to="/reward">Reward | </router-link>
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
       <!-- <button @click="logSomething()">Log</button> -->
     </div>
@@ -27,10 +29,10 @@ export default {
     isAdmin() {
       return AuthUser.getters.isAdmin
     },
-    // async logSomething(){
+    // logSomething(){
     //   console.log(AuthUser.getters.isAuthen);
     //   console.log(AuthUser.getters.isAdmin);
-    //   console.log(await AuthUser.getters.user);
+    //   console.log(AuthUser.getters.user);
     // }
   }
 }

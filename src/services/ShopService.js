@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import AuthService from '@/services/AuthService'
 
-const api_endpoint = process.env.VUE_APP_POKEDEX_ENDPOINT || "http://localhost:1337"
+const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
 export default {
   async getItemById(id) {

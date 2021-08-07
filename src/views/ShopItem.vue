@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     createUrl(pictureUrl) {
-      let api_endpoint = process.env.VUE_APP_POKEDEX_ENDPOINT || "http://localhost:1337"
+      let api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
       return api_endpoint + pictureUrl
     },
     increase() {

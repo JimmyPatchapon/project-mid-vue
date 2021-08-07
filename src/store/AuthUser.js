@@ -3,7 +3,7 @@ import Vuex from "vuex"
 import AuthService from "@/services/AuthService"
 Vue.use(Vuex)
 
-const auth_key = "auth-pokedex"
+const auth_key = "auth-user"
 let auth = JSON.parse(localStorage.getItem(auth_key))
 
 const initialState = {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
             state.user = user
             state.jwt = jwt
             state.isAuthen = true
-            state.isAdmin =  AuthService.isAdministration()
+            state.isAdmin = user.role.name === "Administration"
         },
         logoutSuccess (state) {
             state.user = ""
@@ -50,6 +50,13 @@ export default new Vuex.Store({
                 commit("loginSuccess",res.user,res.jwt)
             }
             return res
+        },
+        async editPoint({ commit }, {username, points}){
+            let res = await AuthService.editPoint({username,points})
+            if(res.success){
+                commit("editSuccess")
+            }
+            return res
         }
     },
     getters: {
@@ -57,7 +64,7 @@ export default new Vuex.Store({
         jwt: (state) => state.jwt,
         isAuthen: (state) => state.isAuthen,
         isAdmin: (state) => state.isAdmin,
-        
+
     },
     modules: {},
 })
