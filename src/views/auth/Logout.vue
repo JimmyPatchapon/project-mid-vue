@@ -1,6 +1,6 @@
 <template>
   <div>
-
+      Logout
   </div>
 </template>
 
@@ -8,11 +8,10 @@
 // import AuthService from "@/services/AuthService"
 import AuthUser from "@/store/AuthUser"
 export default {
-  created() {
-    // AuthService.logout()
-    AuthUser.dispatch('logout')
-    this.$router.push('/')
-  }
+    created(){
+        AuthUser.dispatch("logout")
+        this.$router.push('/')
+    }
 }
 </script>
 
