@@ -5,7 +5,7 @@ import AuthService from "@/services/AuthService"
 
 Vue.use(Vuex)
 
-const auth_key = "auth-pokedex"
+const auth_key = "auth-user"
 let auth = JSON.parse(localStorage.getItem(auth_key))
 
 const initialState = {

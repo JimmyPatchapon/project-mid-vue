@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Reward</h1>
-        <h3>Point: {{ users.points }}</h3>
+        <h3>Point: {{ points }}</h3>
         <table>
             <thead>
                 <th>NO.</th>
@@ -23,11 +23,13 @@
 
 <script>
 import rewardApi from "@/store/RewardApi"
+import AuthUser from "@/store/AuthUser"
+
+
 export default {
     data(){
         return{
             rewards:[],
-            users:[],
             points:"",
             require_points:"",
             name_reward:"",
@@ -35,14 +37,20 @@ export default {
     },
     created(){
         this.fetchReward()
+        this.getPoint()
     },
     methods:{
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
             this.rewards = rewardApi.getters.rewards
         },
+        async getPoint(){
+            await AuthUser.dispatch("getPoint")
+            console.log(AuthUser.getters.user)
+            this.points = AuthUser.getters.user.points
+        },
         redeem(){
-
+            this.points-=this.require_points
         }
     }
 }
