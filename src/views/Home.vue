@@ -3,7 +3,7 @@
     <img v-if="!isAuthen()" alt="Vue logo" src="../assets/logo.png">
     <img v-if="isAuthen()" alt="Vue logo" src="http://localhost:1337/uploads/badfallen_d19d4214fd.png">
 
-    <HelloWorld v-if="isAuthen()" msg="Don't forget to install modules"/>
+    <HelloWorld v-if="isAuthen()" msg="Don't forget to install modules"></HelloWorld>
     <HelloWorld v-if="!isAuthen()"></HelloWorld>
     <button @click="logSomething()">Log Something</button>
     <br>
@@ -16,6 +16,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import AuthUser from '@/store/AuthUser'
 import ItemsApiStore from "@/store/ItemsApi"
+import AuthService from '@/services/AuthService'
 
 export default {
   name: 'Home',
@@ -40,6 +41,10 @@ export default {
       let logging = AuthUser.getters.user
       console.log(logging);
       console.log(logging.points);
+      this.isAdmin()
+    },
+    isAdmin() {
+      console.log(AuthService.isAdministration()); 
     }
   }
 }

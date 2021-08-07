@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 import AuthUser from '@/store/AuthUser'
 export default {
   methods: {

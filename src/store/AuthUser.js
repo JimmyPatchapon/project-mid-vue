@@ -9,7 +9,8 @@ let auth = JSON.parse(localStorage.getItem(auth_key))
 const initialState = {
     user: auth ? auth.user : "",
     jwt: auth ? auth.jwt : '',
-    isAuthen: auth ? true: false
+    isAuthen: auth ? true: false,
+    isAdmin: auth ? true: false
 }
 
 export default new Vuex.Store({
@@ -53,6 +54,7 @@ export default new Vuex.Store({
         user: (state) => state.user,
         jwt: (state) => state.jwt,
         isAuthen: (state) => state.isAuthen,
+        
 
     },
     modules: {},

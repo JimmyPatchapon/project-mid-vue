@@ -7,13 +7,15 @@ import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
 import Member from '@/views/Member'
+import Home from "@/views/Home"
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Homepage',
     component: Shop
   },
   {
