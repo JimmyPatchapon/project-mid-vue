@@ -24,7 +24,6 @@ export default new Vuex.Store({
     actions: {
         async fetchReward({commit}){
             let res = await Axios.get(api_endpoint + "/rewards")
-            
             commit("fetch", {res})
         }
     },

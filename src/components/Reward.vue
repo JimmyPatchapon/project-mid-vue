@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Reward</h1>
-        <h3>Point: </h3>
+        <h3>Point: {{ users.points }}</h3>
         <table>
             <thead>
                 <th>NO.</th>
@@ -13,7 +13,7 @@
                     <td>{{ index + 1 }}</td>
                     <td>{{ reward.name_reward }}</td>
                     <td>{{ reward.require_points }}</td>
-                    <button>Exchange</button>
+                    <button @click="redeem">Exchange</button>
                 </tr>
             </tbody>
         </table>
@@ -22,30 +22,27 @@
 </template>
 
 <script>
-import rewardApi from "@/store/rewardApi"
-import userApi from "@/store/userApi"
+import rewardApi from "@/store/RewardApi"
 export default {
     data(){
         return{
             rewards:[],
             users:[],
-            require_points:"",
             points:"",
-            name_reward:""
+            require_points:"",
+            name_reward:"",
         }
     },
     created(){
         this.fetchReward()
-        this.fetchUser()
     },
     methods:{
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
             this.rewards = rewardApi.getters.rewards
         },
-        async fetchUser(){
-            await userApi.dispatch("fetchUser")
-            this.users = userApi.getters.users
+        redeem(){
+
         }
     }
 }

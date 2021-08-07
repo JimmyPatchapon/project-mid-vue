@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import EventListApi from "@/store/eventListApi"
+import EventListApi from "@/store/EventListApi"
 export default {
     data(){
         return{

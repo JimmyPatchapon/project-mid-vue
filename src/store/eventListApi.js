@@ -23,7 +23,6 @@ export default new Vuex.Store({
     },
     actions: {
         async fetchEventList({commit}){
-            console.log(api_endpoint)
             let res = await Axios.get(api_endpoint + "/events")
             commit("fetch", {res})
         },
