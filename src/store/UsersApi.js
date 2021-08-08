@@ -44,7 +44,7 @@ export default new Vuex.Store({
             let headers = AuthService.getApiHeader()
             let res = await Axios.put(url, body, headers)
             if(res.status === 200) {
-              commit("edit", 0, res.data)
+              commit("edit", payload.id, res.data)
               console.log(res.data);
               return {
                 success: true,

@@ -18,7 +18,6 @@
 <script>
 
 import AuthUser from '@/store/AuthUser'
-import AuthService from '@/services/AuthService'
 export default {
   methods: {
     isAuthen() {
