@@ -1,12 +1,12 @@
 <template>
   <div>
-      <table>
+      <table v-if="tableIndex === 0">
       <thead>
         <tr>
           <th>#</th>
           <th>Username</th>
           <th>Point</th>
-          <th>Total Point Used</th>
+          <th>Total Point</th>
         </tr>
       </thead>
       <tbody>
@@ -15,11 +15,37 @@
           <td>{{ user.username }}</td>
           <td>{{ user.points }}</td>
           <td>{{ user.accumulativePoints }}</td>
+          <button @click="logSomething()">Click</button>
+        </tr>
+      </tbody>
+
+    </table>
+          <table v-if="tableIndex === 1">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Point</th>
+          <th>Total Point</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(point, index) in pointHistory" :key="index">
+          <td>{{ index + 1 }}</td>
+          <td>{{ pointHistory[0].users[0].username }}</td>
+          <td>{{ pointHistory[0].users[0].points }}</td>
+          <td>{{ pointHistory[0].users[0].accumulativePoints }}</td>
+          <button @click="logSomething()">Click</button>
         </tr>
       </tbody>
     </table>
     <br><br>
-      {{ users }}
+    <div>
+      <button @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</button>
+      <button @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</button>
+    </div>
+    <br><br>
+      {{ pointHistory }}
   </div>
 </template>
 
@@ -31,48 +57,62 @@ import PointStore from "@/store/Point"
 export default {
     data() {
         return {
-            users: []
+            users: [],
+            pointHistory: [],
+            tableIndex: 0
         }
     },
     methods: {
         async fetchUsers(){
             await UsersApiStore.dispatch("fetchAuthenticated")
             this.users = UsersApiStore.getters.users
-            console.log("can i fetch this bitch");
             this.sortUsersByTotalPoints()
+        },
+        async fetchPointHistory() {
+          await PointStore.dispatch("fetchPointList")
+          this.pointHistory = PointStore.getters.pointList
         },
         isAuthen() {
             return AuthUser.getters.isAuthen
         },
         isAdmin() {
             if (AuthUser.getters.user.role !== undefined) {
-              if (AuthUser.getters.user.role.name === "Administration") {
-                return true
-              } 
-              else {
-                return false
-              }
+                if (AuthUser.getters.user.role.name === "Administration") {
+                  return true
+                } 
+                else 
+                {
+                    return false
+                }
             } 
             else 
             {
-              return false
+                return false
             }
         },
         sortUsersByTotalPoints() {
             this.users.sort((a,b) => {
-              console.log(a.points - b.points);
               return b.points - a.points
             })
-        }
+        },
+        logSomething() {
+          console.table(this.pointHistory)
+        },
+        changeTable() {
+          if (this.tableIndex === 0)
+            this.tableIndex = 1
+          else {
+            this.tableIndex = 0;
+          }
+        },
     },
     async created(){
-        await this.fetchUsers()
         if(!this.isAdmin()) {
             this.$swal("You have no permission","","warning")
             this.$router.push("/")
         }
-
-
+        this.fetchUsers()
+        this.fetchPointHistory()
     }
 }
 </script>

@@ -57,7 +57,7 @@ export default {
     let user = AuthService.getUser()
     let body ={
       users: user.id,
-      detail: "10 bath get 1 point form buy " + itemName,
+      detail: "10 Baht get 1 point from buy " + itemName,
       amount: amount/10,
       date: (new Date()).toISOString().slice(0,10)
     }
