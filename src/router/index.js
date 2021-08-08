@@ -9,6 +9,7 @@ import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
 import Member from '@/views/Member'
+import Create from '@/views/reward/Create'
 
 
 Vue.use(VueRouter)
@@ -58,6 +59,11 @@ const routes = [
     path: '/reward',
     name: 'Reward',
     component: Reward
+  },
+  {
+    path: '/reward/add',
+    name: 'Reward Add',
+    component: Create
   }
 ]
 

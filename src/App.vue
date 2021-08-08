@@ -9,7 +9,7 @@
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
       <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
       <router-link v-if="isAuthen()" to="/reward">Reward</router-link>
-      <span v-if="isAdmin()"> |</span> 
+      <span v-if="isAuthen()"> |</span> 
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
       
       <button @click="logSomething()">Log</button>

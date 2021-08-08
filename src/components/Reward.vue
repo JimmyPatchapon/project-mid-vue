@@ -2,10 +2,7 @@
     <div>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
-        <div v-if="isAdministration()">
-            <label for="name">Reward name</label>
-            <input type="text" v-model="name_reward">
-        </div>
+
         <table>
             <thead>
                 <th>NO.</th>
@@ -18,8 +15,14 @@
                     <td>{{ reward.name_reward }}</td>
                     <td>{{ reward.require_points }}</td>
                     <button @click="redeem(index)">Exchange</button>
+                    
                 </tr>
+                <router-link to="/reward/add">
+                    <button v-if="isAdmin()" >Add Reward</button>
+                </router-link>
+                
             </tbody>
+            
         </table>
         
     </div>
@@ -38,6 +41,7 @@ export default {
             points:"",
             require_points:"",
             name_reward:"",
+
         }
     },
     created(){
@@ -45,23 +49,19 @@ export default {
         this.getPoint()
     },
     methods:{
-        isAdministration() {
-        return this.isAuthen() && user.role.name === "Administration"
-        },
-        addReward(){
-            let payload ={
-                name_reward:this.name_reward,
-                require_points:this.require_points
-            }
-            let res = await rewardApi.dispatch("addReward", payload)
-            if(res.success){
-                this.$swal("Add finish",this.name_reward+" is created","success")
-            }else{
-                this.$swal("Add failed",res.message,"error")
+        isAdmin() {
+            if (AuthUser.getters.user.role !== undefined) {
+                if (AuthUser.getters.user.role.name === "Administration") {
+                return true
+                } else {
+                return false
+                }
+            } else {
+                return false
             }
         },
         editReward(){
-
+            
         },
         deleteReward(){
 
@@ -71,10 +71,7 @@ export default {
             this.rewards = rewardApi.getters.rewards
         },
         getPoint(){
-            console.log(AuthUser.getters.user)
-            
             this.points = AuthUser.getters.user.points
-            console.log(typeof(this.points));
         },
         redeem(index){
             if(this.points>=this.rewards[index].require_points){
