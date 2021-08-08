@@ -25,16 +25,14 @@
         <tr>
           <th>#</th>
           <th>Username</th>
-          <th>Point</th>
-          <th>Total Point</th>
+          <th>Redeemed Point</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(point, index) in pointHistory" :key="index">
+        <tr v-for="(sum, index) in sumHistory" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ pointHistory[0].users[0].username }}</td>
-          <td>{{ pointHistory[0].users[0].points }}</td>
-          <td>{{ pointHistory[0].users[0].accumulativePoints }}</td>
+          <td>{{ sum.username }}</td>
+          <td>{{ sum.sumPoint }}</td>
           <button @click="logSomething()">Click</button>
         </tr>
       </tbody>
@@ -72,6 +70,8 @@ export default {
         async fetchPointHistory() {
           await PointStore.dispatch("fetchPointList")
           this.pointHistory = PointStore.getters.pointList
+          this.sumAllHistory()
+          this.sumAllHistory()
         },
         isAuthen() {
             return AuthUser.getters.isAuthen
@@ -97,23 +97,54 @@ export default {
             })
         },
         logSomething() {
-          console.table(this.pointHistory)
+
+          this.sumAllHistory()
+          console.table(this.sumHistory)
+
         },
         changeTable() {
           if (this.tableIndex === 0)
             this.tableIndex = 1
           else {
+
             this.tableIndex = 0;
           }
         },
+        sumAllHistory() {
+            this.sumHistory = []
+            let usernames = []
+            let sum = 0
+            for (let i = 0; i < this.users.length; i++) {
+              usernames.push(this.users[i].username)
+              
+            } 
+            for (let i = 0; i < usernames.length; i++) {
+              const e = usernames[i]; // username
+              //check if username matches the pointHistory
+              this.pointHistory.forEach(element => {
+                if (element.users[0].username === e)
+                {
+                  sum += element.amount
+                }
+              });
+              
+              this.sumHistory.push({
+                username: e,
+                sumPoint: sum
+              })
+              sum = 0
+            }
+        }
     },
-    async created(){
+    created(){
         if(!this.isAdmin()) {
             this.$swal("You have no permission","","warning")
             this.$router.push("/")
         }
         this.fetchUsers()
         this.fetchPointHistory()
+
+
     }
 }
 </script>
