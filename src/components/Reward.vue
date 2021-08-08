@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import rewardApi from "@/store/RewardApi"
+import rewardApi from "@/store/rewardApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import RewardService from "@/services/RewardService"
