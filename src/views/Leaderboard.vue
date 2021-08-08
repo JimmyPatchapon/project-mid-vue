@@ -27,6 +27,7 @@
 import AuthUser from "@/store/AuthUser"
 import AuthService from "@/services/AuthService"
 import UsersApiStore from "@/store/UsersApi"
+import PointStore from "@/store/Point"
 export default {
     data() {
         return {
@@ -37,20 +38,41 @@ export default {
         async fetchUsers(){
             await UsersApiStore.dispatch("fetchAuthenticated")
             this.users = UsersApiStore.getters.users
+            console.log("can i fetch this bitch");
+            this.sortUsersByTotalPoints()
         },
         isAuthen() {
             return AuthUser.getters.isAuthen
         },
         isAdmin() {
-            return AuthService.isAdministration()
+            if (AuthUser.getters.user.role !== undefined) {
+              if (AuthUser.getters.user.role.name === "Administration") {
+                return true
+              } 
+              else {
+                return false
+              }
+            } 
+            else 
+            {
+              return false
+            }
+        },
+        sortUsersByTotalPoints() {
+            this.users.sort((a,b) => {
+              console.log(a.points - b.points);
+              return b.points - a.points
+            })
         }
     },
-    created(){
-        this.fetchUsers()
+    async created(){
+        await this.fetchUsers()
         if(!this.isAdmin()) {
             this.$swal("You have no permission","","warning")
             this.$router.push("/")
         }
+
+
     }
 }
 </script>

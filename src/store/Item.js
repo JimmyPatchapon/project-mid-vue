@@ -49,7 +49,7 @@ export default new Vuex.Store({
           }
         }
       } catch(e) {
-        if(e.response.satus === 403) {
+        if(e.response.status === 403) {
           console.error(e.response.data.message)
           return {
             success: false,

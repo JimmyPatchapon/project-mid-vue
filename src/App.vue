@@ -3,17 +3,13 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link v-if="isAdmin()" to="/leaderboard">Leaderboard</router-link>
+      <router-link v-if="this.isAdmin()" to="/leaderboard">Leaderboard</router-link>
       <span v-if="isAdmin()"> |</span> 
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
-      <router-link v-if="!isAuthen()" to="/login">Login</router-link>
-      <router-link v-if="isAuthen()" to="/eventList">Event List</router-link> 
-      <span v-if="isAuthen()"> |</span> 
-      <router-link v-if="isAuthen()" to="/reward">Reward</router-link>
-      <span v-if="isAuthen()"> |</span> 
+      <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
-      <!-- <button @click="logSomething()">Log</button> -->
+      <button @click="logSomething()">Log</button>
     </div>
     <router-view/>
   </div>
@@ -29,13 +25,21 @@ export default {
       return AuthUser.getters.isAuthen
     },
     isAdmin() {
-      return AuthUser.getters.isAdmin
+      if (AuthUser.getters.user.role !== undefined) {
+        if (AuthUser.getters.user.role.name === "Administration") {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
     },
-    // logSomething(){
-    //   console.log(AuthUser.getters.isAuthen);
-    //   console.log(AuthUser.getters.isAdmin);
-    //   console.log(AuthUser.getters.user);
-    // }
+    logSomething(){
+      console.log(AuthUser.getters.isAuthen);
+      console.log(AuthUser.getters.isAdmin);
+      console.log(AuthUser.getters.user);
+    }
   }
 }
 </script>

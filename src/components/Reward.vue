@@ -47,7 +47,9 @@ export default {
         },
         async getPoint(){
             console.log(AuthUser.getters.user)
+            
             this.points = AuthUser.getters.user.points
+            console.log(typeof(this.points));
         },
         redeem(index){
             if(this.points>=this.rewards[index].require_points){

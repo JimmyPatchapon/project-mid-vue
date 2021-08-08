@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="card" v-for="i in items" :key="i"><router-link :to="{name:'ShopItem', params:{id: i.id}}">
+    <a class="card" v-for="(i,index) in items" :key="index"><router-link :to="{name:'ShopItem', params:{id: i.id}}">
       <img :src="createUrl(i.picture.url)" alt="">
       <div>{{i.name}}</div>
       <div>{{i.prices}}</div>
@@ -26,7 +26,6 @@ export default {
     },
     createUrl(pictureUrl) {
       let api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
-      console.log(api_endpoint)
       return api_endpoint + pictureUrl
     }
   }
