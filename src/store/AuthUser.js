@@ -54,7 +54,7 @@ export default new Vuex.Store({
         async editPoint({ commit }, {username, points}){
             let res = await AuthService.editPoint({username,points})
             if(res.success){
-                commit("editSuccess")
+                commit("")
             }
             return res
         }

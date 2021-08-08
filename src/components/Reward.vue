@@ -25,6 +25,7 @@
 import rewardApi from "@/store/RewardApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
+import RewardService from "@/services/RewardService"
 
 export default {
     data(){
@@ -51,22 +52,23 @@ export default {
         redeem(index){
             if(this.points>=this.rewards[index].require_points){
                 this.points-=this.rewards[index].require_points 
-                this.usePoint()
-                
+                this.usePoint(index)
+                this.$swal("Redeem Success", "", "success")
             }else{
                 this.$swal("Your points are not enough","", "error")
-                console.log("bla");
             }  
             
         },
-        async usePoint() {
+        async usePoint(index) {
             let payload = {
                 id: AuthUser.getters.user.id,
                 points: this.points
             }
-            console.log(payload);
             await UserApi.dispatch("editPoint", payload)
-        }
+            await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+        },
+        
+
     }
 }
 </script>

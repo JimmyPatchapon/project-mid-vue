@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-link v-if="isAuthen()" to="/">Log out</router-link>
     <event></event>
   </div>
 </template>

@@ -7,9 +7,11 @@
       <span v-if="isAdmin()"> |</span> 
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
       <router-link v-if="isAuthen()" to="/member">Member</router-link> |
-      <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
-      <router-link v-if="isAuthen()" to="/eventList">Event List | </router-link> 
-      <router-link v-if="isAuthen()" to="/reward">Reward | </router-link>
+      <router-link v-if="!isAuthen()" to="/login">Login</router-link>
+      <router-link v-if="isAuthen()" to="/eventList">Event List</router-link> 
+      <span v-if="isAuthen()"> |</span> 
+      <router-link v-if="isAuthen()" to="/reward">Reward</router-link>
+      <span v-if="isAuthen()"> |</span> 
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
       <!-- <button @click="logSomething()">Log</button> -->
     </div>

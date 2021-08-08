@@ -1,6 +1,7 @@
 <template>
   <div>
       <h1>Event</h1>
+      <h2>Total: {{ points }}</h2>
       <div>
           <table>
               <thead>
@@ -15,12 +16,7 @@
                       <td>{{ event.event_name }}</td>
                       <td>{{ event.total }}</td>
                       <td>{{ event.earn_point }}</td>
-                      <td v-if="index===claimIndex">
-                          <button @click="claimReward(index, event)">claim</button>
-                      </td> 
-                      <td v-if="index!==claimIndex">
-                          <button :disabled="isDisabled">claimed</button>
-                      </td> 
+                      <button @click="earn(index)">claim</button> 
                   </tr>
               </tbody>
           </table>
@@ -30,6 +26,8 @@
 
 <script>
 import EventListApi from "@/store/EventListApi"
+import AuthUser from "@/store/AuthUser"
+import UserApi from "@/store/UsersApi"
 export default {
     data(){
         return{
@@ -44,36 +42,31 @@ export default {
     },
     created(){
         this.fetchEventList()
+        this.getPoint()
     },
     methods:{
         async fetchEventList(){
             await EventListApi.dispatch("fetchEventList")
             this.events = EventListApi.getters.events
         },
-        claimReward(index, event){
-            this.claim_button=true
-            this.claimIndex=index
-            this.editButton(event)
+         async getPoint(){
+            console.log(AuthUser.getters.user)
+            this.points = AuthUser.getters.user.points
         },
-        async editButton(event) {
-            let cloned = JSON.parse(JSON.stringify(event))
-            this.id = cloned.id
-            this.claim_button=cloned.claim_button
+        earn(index){
+            this.points+=this.events[index].earn_point
+            this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
+        },
+        async earnPoint(index) {
             let payload = {
-                id: this.id,
-                claim_button: this.claim_button,
+                id: AuthUser.getters.user.id,
+                points: this.points
             }
-            console.log(payload)
-            await EventListApi.dispatch("editButton", payload)
-            this.fetchEventList()
+            await UserApi.dispatch("editPoint", payload)
+            
         },
     },
-    computed:{
-        isDisabled: function(){
-            return this.claim_button
-        }
-    }
-  
+
 }
 </script>
 
