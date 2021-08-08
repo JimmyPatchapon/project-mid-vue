@@ -25,14 +25,16 @@
 </template>
 
 <script>
-import EventListApi from "@/store/eventListApi"
+import EventListApi from "@/store/EventListApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
+import EventService from "@/services/EventService"
 export default {
     data(){
         return{
             claimIndex:-1,
             events:[],
+            points:"",
             id:"",
             event_name:"",
             total:"",
@@ -49,21 +51,26 @@ export default {
             await EventListApi.dispatch("fetchEventList")
             this.events = EventListApi.getters.events
         },
-         async getPoint(){
-            console.log(AuthUser.getters.user)
-            this.points = AuthUser.getters.user.points
+        getPoint(){
+            this.points = parseInt(AuthUser.getters.user.points)
         },
         earn(index){
-            this.points+=this.events[index].earn_point
-            this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
+            if(this.events[index].total<=AuthUser.getters.user.accumulativePoints){
+                this.points+=this.events[index].earn_point
+                this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
+                this.earnPoint(index)
+            }else{
+                this.$swal("Point are not enough","","error")
+            }
         },
-        async earnPoint(index) {
+        async earnPoint(index){
             let payload = {
                 id: AuthUser.getters.user.id,
                 points: this.points
             }
+            console.log(payload.points);
             await UserApi.dispatch("editPoint", payload)
-            
+            await EventService.earnPoint(this.events[index].event_name, this.points)
         },
     },
 
