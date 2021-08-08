@@ -2,6 +2,10 @@
     <div>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
+        <div v-if="isAdministration()">
+            <label for="name">Reward name</label>
+            <input type="text" v-model="name_reward">
+        </div>
         <table>
             <thead>
                 <th>NO.</th>
@@ -41,6 +45,27 @@ export default {
         this.getPoint()
     },
     methods:{
+        isAdministration() {
+        return this.isAuthen() && user.role.name === "Administration"
+        },
+        addReward(){
+            let payload ={
+                name_reward:this.name_reward,
+                require_points:this.require_points
+            }
+            let res = await rewardApi.dispatch("addReward", payload)
+            if(res.success){
+                this.$swal("Add finish",this.name_reward+" is created","success")
+            }else{
+                this.$swal("Add failed",res.message,"error")
+            }
+        },
+        editReward(){
+
+        },
+        deleteReward(){
+
+        },
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
             this.rewards = rewardApi.getters.rewards
