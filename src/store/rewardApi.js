@@ -17,12 +17,22 @@ export default new Vuex.Store({
         fetch(state, {res}){
             state.data = res.data
         },
+        add(state, payload) {
+            state.data.push(payload)
+        },
     },
     actions: {
         async fetchReward({commit}){
             let res = await Axios.get(api_endpoint + "/rewards")
             commit("fetch", {res})
         },
+        async addReward( { commit }, payload)
+        {
+            let res = await Axios.post(api_endpoint + "/rewards", payload)
+            if (res.status === 200)
+                commit("add" , { res })
+                return { success: true }
+        }
 
     },
     modules: {

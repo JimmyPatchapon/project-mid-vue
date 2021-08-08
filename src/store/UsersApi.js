@@ -45,7 +45,6 @@ export default new Vuex.Store({
             let res = await Axios.put(url, body, headers)
             if(res.status === 200) {
               commit("edit", payload.id, res.data)
-              console.log(res.data);
               return {
                 success: true,
                 data: res.data

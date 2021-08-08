@@ -44,6 +44,7 @@
     </div>
     <br><br>
       {{ pointHistory }}
+      {{ sumHistory  }}
   </div>
 </template>
 
@@ -69,9 +70,9 @@ export default {
         },
         async fetchPointHistory() {
           await PointStore.dispatch("fetchPointList")
-          this.pointHistory = PointStore.getters.pointList
+          this.pointHistory = await PointStore.getters.pointList
           this.sumAllHistory()
-          this.sumAllHistory()
+          this.sortSumAllHistory()
         },
         isAuthen() {
             return AuthUser.getters.isAuthen
@@ -96,17 +97,23 @@ export default {
               return b.points - a.points
             })
         },
+        sortSumAllHistory() {
+            this.sumHistory.sort((a,b) => {
+              return b.sumPoint - a.sumPoint
+            })
+        },        
         logSomething() {
 
-          this.sumAllHistory()
           console.table(this.sumHistory)
 
         },
         changeTable() {
-          if (this.tableIndex === 0)
-            this.tableIndex = 1
+          if (this.tableIndex === 0){
+            this.tableIndex = 1.
+            this.sumAllHistory()
+            this.sortSumAllHistory()
+          }
           else {
-
             this.tableIndex = 0;
           }
         },
