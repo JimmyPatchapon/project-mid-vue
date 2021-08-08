@@ -17,17 +17,14 @@ export default new Vuex.Store({
         fetch(state, {res}){
             state.data = res.data
         },
-        edit(state, index, data) {
-            state.data[index] = data
-        },
     },
     actions: {
         async fetchReward({commit}){
             let res = await Axios.get(api_endpoint + "/rewards")
             commit("fetch", {res})
-        }
+        },
+
     },
-    
     modules: {
     }
 })

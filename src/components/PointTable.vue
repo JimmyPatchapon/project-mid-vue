@@ -9,18 +9,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="i in pointList" :key="i">
-          <td>{{i.date}}</td>
-          <td class="detail">{{i.detail}}</td>
-          <td>{{i.amount}}</td>
+        <tr v-for="(i,index) in pointList" :key="index">
+          <td v-if="checkname(i.users[0].username)">{{i.date}}</td>
+          <td class="detail" v-if="checkname(i.users[0].username)">{{i.detail}}</td>
+          <td v-if="checkname(i.users[0].username)">{{i.amount}}</td>
         </tr>
-      </tbody>
+      </tbody> 
     </table>
   </div>
 </template>
 
 <script>
 import PointStore from '@/store/Point'
+import AuthUser from "@/store/AuthUser"
 export default {
   data() {
     return {
@@ -34,7 +35,15 @@ export default {
     async fetchPointList() {
       await PointStore.dispatch('fetchPointList')
       this.pointList = PointStore.getters.pointList
-    }
+    },
+    checkname(username){
+      let res = AuthUser.getters.user.username
+      if( username === res){
+        return true
+      }
+      return false
+    },
+    
   }
 }
 </script>
