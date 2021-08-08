@@ -1,5 +1,8 @@
 <template>
   <div>
+    Start <input type="Date" v-model="form.dateStart" />
+    End <input type="Date" v-model="form.dateEnd" />
+    <button @click="query()">Query</button>
       <table v-if="tableIndex === 0">
       <thead>
         <tr>
@@ -42,9 +45,6 @@
       <button @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</button>
       <button @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</button>
     </div>
-    <br><br>
-      {{ pointHistory }}
-      {{ sumHistory  }}
   </div>
 </template>
 
@@ -59,7 +59,11 @@ export default {
             users: [],
             pointHistory: [],
             sumHistory: [],
-            tableIndex: 0
+            tableIndex: 0,
+            form: {
+              dateStart: '',
+              dateEnd: ''
+            }
         }
     },
     methods: {
@@ -71,7 +75,7 @@ export default {
         async fetchPointHistory() {
           await PointStore.dispatch("fetchPointList")
           this.pointHistory = await PointStore.getters.pointList
-          this.sumAllHistory()
+          this.sumAllHistory("1970-01-01","3000-12-31")
           this.sortSumAllHistory()
         },
         isAuthen() {
@@ -103,21 +107,25 @@ export default {
             })
         },        
         logSomething() {
-
-          console.table(this.sumHistory)
-
+          console.table(this.pointHistory)
         },
         changeTable() {
           if (this.tableIndex === 0){
             this.tableIndex = 1.
-            this.sumAllHistory()
+            this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
             this.sortSumAllHistory()
           }
           else {
             this.tableIndex = 0;
           }
         },
-        sumAllHistory() {
+        query() {
+            this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
+            this.sortSumAllHistory()
+        },
+        sumAllHistory(startDate, endDate) {
+            let date1 = new Date(startDate)
+            let date2 = new Date(endDate)
             this.sumHistory = []
             let usernames = []
             let sum = 0
@@ -129,7 +137,10 @@ export default {
               const e = usernames[i]; // username
               //check if username matches the pointHistory
               this.pointHistory.forEach(element => {
-                if (element.users[0].username === e)
+                let dateCheck = element.date
+                let date3 = new Date(dateCheck)
+                if (element.users[0].username === e && (date3.getTime() <= date2.getTime() 
+                && date3.getTime() >= date1.getTime()))
                 {
                   sum += element.amount
                 }
