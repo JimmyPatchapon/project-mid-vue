@@ -38,6 +38,7 @@ export default {
             let res = await rewardApi.dispatch("addReward", payload)
             if(res.success){
                 this.$swal("Add finish",payload.name_reward+" is created","success")
+                this.$router.push("/reward")
             }else{
                 this.$swal("Add failed",res.message,"error")
             }
