@@ -59,6 +59,7 @@ export default {
         return {
             users: [],
             pointHistory: [],
+            sumHistory: [],
             tableIndex: 0
         }
     },
