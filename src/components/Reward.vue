@@ -45,7 +45,7 @@ export default {
             await rewardApi.dispatch("fetchReward")
             this.rewards = rewardApi.getters.rewards
         },
-        async getPoint(){
+        getPoint(){
             console.log(AuthUser.getters.user)
             this.points = AuthUser.getters.user.points
         },
