@@ -57,5 +57,5 @@ export default {
     } catch(e) {
 
     }
-}
+  }
 }

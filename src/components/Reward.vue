@@ -43,7 +43,6 @@ export default {
             points:"",
             require_points:"",
             name_reward:"",
-
         }
     },
     created(){
@@ -61,12 +60,6 @@ export default {
             } else {
                 return false
             }
-        },
-        editReward(){
-            
-        },
-        deleteReward(){
-
         },
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")

@@ -13,6 +13,9 @@
       <div>
         <button @click="editReward">Edit</button>
       </div>
+      <div>
+        <button @click="deleteReward">Delete</button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +50,18 @@ export default {
       if(res.success) {
         this.$router.push("/reward")
       } else {
-        this.$swal("Add Failed", res.message, "error")
+        this.$swal("Edit Failed", res.message, "error")
+      }
+    },
+    async deleteReward() {
+      let payload = {
+        id: this.id
+      }
+      let res = await RewardApiStore.dispatch('deleteRewaed', payload)
+      if(res.success) {
+        this.$router.push("/reward")
+      } else {
+        this.$swal("Delete Failed", res.message, "error")
       }
     }
   }
