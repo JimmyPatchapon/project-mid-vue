@@ -4,7 +4,7 @@
       <img src="@/assets/logo.png" alt="">
       <div>{{user.username}}</div>
       <div class="email">[ {{user.email}} ]</div>
-      <div>{{user.Points}}</div>
+      <div>{{user.points}}</div>
     </aside>
     <point-table></point-table>
   </div>

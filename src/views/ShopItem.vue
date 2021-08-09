@@ -17,6 +17,8 @@
 <script>
 import ShopService from '@/services/ShopService'
 import ItemStore from '@/store/Item'
+import AuthService from '@/services/AuthService'
+import UserApi from '@/store/UsersApi'
 export default {
   data() {
     return {
@@ -43,13 +45,17 @@ export default {
         this.number--
     },
     async buy() {
+      // 100 bath get 1 point
+      let user = AuthService.getUser()
+      let points = Math.floor(this.item.prices*this.number/100)
       let payload = {
         id: this.id,
         quantity: this.item.quantity - this.number
       }
       let res1 = await ItemStore.dispatch('editItemQuantity', payload)
       let res2 = await ShopService.purchase(this.id, this.number)
-      let res3 = await ShopService.receivePoint(this.item.name, this.item.prices*this.number)
+      let res3 = await ShopService.receivePoint(this.item.name, points, user)
+      this.editPoint(points, user)
       if(res1.success & res2.success & res3.success) {
         this.$swal("Buy Success", this.item.name+" x"+this.number, "success")
         this.$router.push("/")
@@ -60,6 +66,14 @@ export default {
       } else {
         this.$swal("Buy Failed", res3.message, "error")
       }
+    },
+    async editPoint(amount, user) {
+      let payload = {
+        id: user.id,
+        points: parseInt(user.points) + amount
+      }
+      await UserApi.dispatch("editPoint", payload)
+      AuthService.reloadPoints(payload.points)
     }
   }
 }

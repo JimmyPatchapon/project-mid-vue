@@ -51,14 +51,12 @@ export default {
       }
     }
   },
-  async receivePoint(itemName, amount) {
-    // 10 bath get 1 point
+  async receivePoint(itemName, amount, user) {
     let url = api_endpoint + "/point-uses"
-    let user = AuthService.getUser()
     let body ={
       users: user.id,
-      detail: "10 bath get 1 point form buy " + itemName,
-      amount: amount/10,
+      detail: "100 bath get 1 point form buy " + itemName,
+      amount: amount,
       date: (new Date()).toISOString().slice(0,10)
     }
     try {
