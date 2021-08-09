@@ -15,7 +15,7 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import AuthUser from '@/store/AuthUser'
-import ItemStore from "@/store/Item"
+import ItemsApiStore from "@/store/ItemsApi"
 import AuthService from '@/services/AuthService'
 
 export default {
@@ -34,8 +34,8 @@ export default {
         return AuthUser.getters.isAuthen
     },
     async fetchItems(){
-      await ItemStore.dispatch("fetchItems")
-      this.items = ItemStore.getters.items
+      await ItemsApiStore.dispatch("fetchItems")
+      this.items = ItemsApiStore.getters.items
     },
     logSomething() {
       let logging = AuthUser.getters.user
@@ -43,9 +43,6 @@ export default {
       console.log(logging.points);
       this.isAdmin()
     },
-    isAdmin() {
-      console.log(AuthService.isAdministration()); 
-    }
   }
 }
 </script>

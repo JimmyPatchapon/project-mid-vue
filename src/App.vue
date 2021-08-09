@@ -41,6 +41,7 @@ export default {
       console.log(AuthUser.getters.isAuthen);
       console.log(AuthUser.getters.isAdmin);
       console.log(AuthUser.getters.user);
+      console.log(localStorage["auth-user"]);
     }
   }
 }

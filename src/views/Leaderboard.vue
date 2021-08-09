@@ -28,7 +28,7 @@
         <tr>
           <th>#</th>
           <th>Username</th>
-          <th>Redeemed Point</th>
+          <th>Acquired Point</th>
         </tr>
       </thead>
       <tbody>
@@ -61,8 +61,8 @@ export default {
             sumHistory: [],
             tableIndex: 0,
             form: {
-              dateStart: '',
-              dateEnd: ''
+              dateStart: '2021-08-01',
+              dateEnd: '2021-08-10'
             }
         }
     },
@@ -75,6 +75,7 @@ export default {
         async fetchPointHistory() {
           await PointStore.dispatch("fetchPointList")
           this.pointHistory = await PointStore.getters.pointList
+          this.sumAllHistory("1970-01-01","3000-12-31")
           this.sumAllHistory("1970-01-01","3000-12-31")
           this.sortSumAllHistory()
         },
@@ -122,6 +123,7 @@ export default {
         query() {
             this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
             this.sortSumAllHistory()
+            this.tableIndex = 1
         },
         sumAllHistory(startDate, endDate) {
             let date1 = new Date(startDate)
@@ -160,9 +162,7 @@ export default {
             this.$router.push("/")
         }
         this.fetchUsers()
-        this.fetchPointHistory()
-
-
+        this.fetchPointHistory() 
     }
 }
 </script>

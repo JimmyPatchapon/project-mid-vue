@@ -24,7 +24,7 @@
             </tbody>
             
         </table>
-        
+        <button @click="logSomething()">Hey</button>
     </div>
 </template>
 
@@ -91,7 +91,10 @@ export default {
             await UserApi.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
         },
-        
+        logSomething()
+        {
+            console.log(this.points);
+        }
 
     }
 }
