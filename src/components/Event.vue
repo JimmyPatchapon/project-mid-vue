@@ -63,15 +63,15 @@ export default {
                 this.$swal("Point are not enough","","error")
             }
         },
-        async earnPoint(index){
-            let payload = {
-                id: AuthUser.getters.user.id,
-                points: this.points
-            }
-            console.log(payload.points);
-            await UserApi.dispatch("editPoint", payload)
-            await EventService.earnPoint(this.events[index].event_name, this.points)
-        },
+        // async earnPoint(index){
+        //     let payload = {
+        //         id: AuthUser.getters.user.id,
+        //         points: this.points
+        //     }
+        //     console.log(payload.points);
+        //     await UserApi.dispatch("editPoint", payload)
+        //     await EventService.earnPoint(this.events[index].event_name, this.points)
+        // },
     },
 
 }

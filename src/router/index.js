@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import EventList from '@/views/EventList.vue'
-import Reward from '@/views/Reward.vue'
+import Reward from '@/views/Reward-user.vue'
 import Login from "@/views/auth/Login"
 import Logout from "@/views/auth/Logout"
 import Register from '@/views/auth/Register'
@@ -56,8 +56,8 @@ const routes = [
     component: EventList
   },
   {
-    path: '/reward',
-    name: 'Reward',
+    path: '/reward-user',
+    name: 'Reward-user',
     component: Reward
   },
   {

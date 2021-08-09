@@ -1,14 +1,15 @@
 import Axios from 'axios'
 import AuthService from '@/services/AuthService'
+import AuthUser from '../store/AuthUser'
 
 const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
 export default {
 
   async earnPoint(Name, amount) {
-    let url = api_endpoint + "/point-uses"
-    let user = AuthService.getUser()
-    let body ={
+    let url = api_endpoint + "/point-earns"
+    let user = AuthUser.getters.user
+    let body = {
       users: user.id,
       detail: "earn point with event: " + Name,
       amount: amount,

@@ -32,7 +32,20 @@ export default new Vuex.Store({
             if (res.status === 200)
                 commit("add" , { res })
                 return { success: true }
-        }
+        },
+        // editReward({commit}, payload){
+        //     let url = api_endpoint + "/rewards/" + payload.id
+        //     let body = {
+        //         Name_reward: payload.name_reward,
+        //         require_points: payload.require_points,
+        //     }
+        //     let res = await Axios.put(url, body)
+        //     console.log(res)
+        //     if (res.status === 200) {
+        //         console.log("commit('edit')", payload.index, res.data)
+        //         commit("edit", payload.index, res.data)
+        //     } 
+        // }
 
     },
     modules: {

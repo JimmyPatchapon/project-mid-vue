@@ -11,7 +11,8 @@ export default new Vuex.Store({
     data: []
   },
   getters: {
-    pointList: (state) => state.data
+    pointList: (state) => state.data,
+    pointEarn: (state) => state.data,
   },
   mutations: {
     fetch(state, {res}) {
@@ -21,6 +22,11 @@ export default new Vuex.Store({
   actions: {
     async fetchPointList({commit}) {
       let res = await Axios.get(api_endpoint + "/point-uses")
+      commit('fetch', {res})
+    },
+    async fetchPointEarn({commit}){
+      let res = await Axios.get(api_endpoint + "/point-earns")
+      console.log(res);
       commit('fetch', {res})
     }
   },
