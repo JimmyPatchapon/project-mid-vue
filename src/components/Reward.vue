@@ -64,7 +64,7 @@ export default {
             
         },
         deleteReward(){
-
+            
         },
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
@@ -83,14 +83,20 @@ export default {
             }  
             
         },
-        // async usePoint(index) {
-        //     let payload = {
-        //         id: AuthUser.getters.user.id,
-        //         points: this.points
-        //     }
-        //     await UserApi.dispatch("editPoint", payload)
-        //     await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
-        // },
+        async usePoint(index) {
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            await UserApi.dispatch("editPoint", payload)
+            await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+            this.getPoint()
+        },
+        logSomething()
+        {
+            console.log(this.points);
+        }
+
     }
 }
 </script>
