@@ -25,7 +25,7 @@
         <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item v-if="this.isAdmin()" to="/leaderboard">Leaderboard</b-nav-item>
         <b-nav-item v-if="isAuthen()" to="/eventList">Event</b-nav-item>
-        <b-nav-item v-if="isAuthen()" to="/reward-user">Reward</b-nav-item>
+        <b-nav-item v-if="isAuthen()" to="/reward">Reward</b-nav-item>
         <b-nav-item v-if="isAuthen()" to="/logout">Logout</b-nav-item>
       </b-navbar-nav>
 
@@ -52,14 +52,7 @@
 
 import AuthUser from '@/store/AuthUser'
 export default {
-  data() {
-    return {
-      user: []
-    }
-  },
-  mounted() {
-    user = AuthUser.getters.user
-  },
+  
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen

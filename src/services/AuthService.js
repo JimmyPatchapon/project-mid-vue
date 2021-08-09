@@ -12,11 +12,18 @@ export default{
         return (user !== "") && (jwt !== "")
     },
     getApiHeader(){
-        if (jwt !== "")
+        if (this.jwt !== "" && this.jwt !== undefined)
         {
             return {
                 headers: {
-                    Authorization: `Bearer ${jwt}`
+                    Authorization: `Bearer ${this.jwt}`
+                }
+            }
+        }else{
+            this.jwt = JSON.parse(localStorage.getItem(auth_key)).jwt
+            return {
+                headers: {
+                    Authorization: `Bearer ${this.jwt}`
                 }
             }
         }
@@ -119,5 +126,35 @@ export default{
             }
         }
     },
+    async update( payload ) {
+        console.log(payload)
+        try {
+            // let url = api_endpoint + "/users/" + id
+            let url = `${api_endpoint}/users/${payload.id}`
+            let body = {
+                id: payload.id,
+                points: payload.points,
+            }
+            let headers = this.getApiHeader()
+            let res = await Axios.put(url, body, headers)
+            console.log(res);
+            let newData = {
+                jwt: this.jwt,
+                user: res.data
+            }
+            if (res.status === 200) {
+                localStorage.setItem(auth_key, JSON.stringify(newData))
+                return {
+                    success: true,
+                    user: newData.user,
+                    jwt: newData.jwt
+                }
+            } else {
+                console.log("NOT 200", res)
+            }
+        } catch (e) {
+            console.error(e.response)
+        }
+    }
     
 }

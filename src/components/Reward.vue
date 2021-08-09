@@ -36,7 +36,7 @@ import rewardApi from "@/store/rewardApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import RewardService from "@/services/RewardService"
-
+import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
@@ -84,9 +84,8 @@ export default {
                 id: AuthUser.getters.user.id,
                 points: this.points
             }
-            await UserApi.dispatch("editPoint", payload)
+            await AuthUser.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
-            this.getPoint()
         },
         
 
