@@ -10,6 +10,7 @@ import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
 import Member from '@/views/Member'
 import Create from '@/views/reward/Create'
+import RewardEdit from '@/views/reward/Edit'
 
 
 Vue.use(VueRouter)
@@ -56,14 +57,19 @@ const routes = [
     component: EventList
   },
   {
-    path: '/reward-user',
-    name: 'Reward-user',
+    path: '/reward',
+    name: 'Reward',
     component: Reward
   },
   {
     path: '/reward/add',
     name: 'Reward Add',
     component: Create
+  },
+  {
+    path: '/reward/:id/edit',
+    name: 'RewardEdit',
+    component: RewardEdit
   }
 ]
 

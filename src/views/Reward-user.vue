@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='wow'> 
         <reward></reward>
     </div>
 </template>
@@ -13,6 +13,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.wow {
+  text-align: center;
+}
 </style>

@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
 
-        <table>
+        <table class='wow'>
             <thead>
                 <th>NO.</th>
                 <th>Reward</th>
@@ -16,7 +16,9 @@
                     <td>{{ reward.name_reward }}</td>
                     <td>{{ reward.require_points }}</td>
                     <button @click="redeem(index)">Exchange</button>
-                    
+                    <td v-if="isAdmin()">
+                        <router-link :to="{ name: 'RewardEdit', params: { id: reward.id } }">Edit</router-link>
+                    </td>
                 </tr>
                 <router-link to="/reward/add">
                     <button v-if="isAdmin()" >Add Reward</button>
@@ -83,17 +85,18 @@ export default {
                 points: this.points
             }
             await UserApi.dispatch("editPoint", payload)
-            
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
             this.getPoint()
         },
         
+
 
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
 table {
   width: 100%;
   border: 1px solid black;
@@ -109,4 +112,5 @@ td {
   padding: 5px;
 }
 tr:hover {background-color: #ddd;}
-</style>>
+</style>
+
