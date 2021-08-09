@@ -10,7 +10,7 @@
       <router-link v-if="!isAuthen()" to="/login">Login</router-link> 
       <router-link v-if="isAuthen()" to="/eventList">Event</router-link>
       <span v-if="isAuthen()"> |</span> 
-      <router-link v-if="isAuthen()" to="/reward-user">Reward</router-link>
+      <router-link v-if="isAuthen()" to="/reward">Reward</router-link>
       <span v-if="isAuthen()"> |</span> 
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
       

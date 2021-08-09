@@ -49,5 +49,13 @@ export default {
         }
       }
     }
-  }
+  },
+  async getRewardById(id) {
+    try {
+        let res = await Axios.get(`${api_endpoint}/rewards/${id}`)
+        return res.data
+    } catch(e) {
+
+    }
+}
 }
