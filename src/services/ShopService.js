@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import AuthService from '@/services/AuthService'
+import AuthUser from "@/store/AuthUser"
 
 const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
@@ -14,7 +15,7 @@ export default {
   },
   async purchase(itemId, amount) {
     let url = api_endpoint + "/purchases"
-    let user = AuthService.getUser()
+    let user = AuthUser.getters.user
     let body = {
       items: itemId,
       Amount: amount,
@@ -55,7 +56,7 @@ export default {
     let url = api_endpoint + "/point-uses"
     let body ={
       users: user.id,
-      detail: "100 bath get 1 point form buy " + itemName,
+      detail: "100 bath get 1 point from buy " + itemName,
       amount: amount,
       date: (new Date()).toISOString().slice(0,10)
     }

@@ -1,20 +1,16 @@
 import Axios from 'axios'
 import AuthService from '@/services/AuthService'
-import AuthUser from '@/store/AuthUser'
 
 const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
 export default {
-  add(){
-    
-  },
 
-  async redeemPoint(Name, amount) {
+  async earnPoint(Name, amount) {
     let url = api_endpoint + "/point-uses"
-    let user = AuthUser.getters.user
+    let user = AuthService.getUser()
     let body ={
       users: user.id,
-      detail: "exchange reward with reward: " + Name,
+      detail: "earn point with event: " + Name,
       amount: amount,
       date: (new Date()).toISOString().slice(0,10)
     }
