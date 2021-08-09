@@ -1,15 +1,29 @@
 <template>
 <div>
-  <div class='wow'>
-    Start <input type="Date" v-model="form.dateStart" />
-    End <input type="Date" v-model="form.dateEnd" />
-    <button @click="query()">Query</button>
+  <div>
+    <div class='wow'>
+      <b-container>
+      <b-row>
+        <b-col>Start <b-form-datepicker id="example-datepicker" v-model="form.dateStart"></b-form-datepicker></b-col>
+        <b-col>End <b-form-datepicker id="example-datepicker" v-model="form.dateEnd"></b-form-datepicker></b-col>
+      </b-row>
+      <br>
+        <b-button variant='warning' @click="query()">Query</b-button>
+      </b-container>
+    </div>
+    
+    <br>
+    <h1>Points Leaderboard</h1>
   </div>
   <div v-if="tableIndex === 0">
-    <b-table hover :items="users" :fields="fields" class='wow'></b-table>
+    <b-table head-variant='dark' striped outlined hover fixed :items="users" :fields="fields1" class='text-left'></b-table>
   </div>
   <div v-if="tableIndex === 1">
-    <b-table hover :items="sumHistory" :fields="fields" class='wow'></b-table>
+    <b-table head-variant='dark' striped outlined hover fixed :items="sumHistory" :fields="fields2" class='text-left'></b-table>
+  </div>
+  <div class='wow'>
+    <b-button variant='info' @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</b-button>
+    <b-button variant='danger' @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</b-button>
   </div>
 </div>
   <!-- <div class="wow">
@@ -73,7 +87,8 @@ export default {
             users: [],
             pointHistory: [],
             sumHistory: [],
-            fields: ['username','points','accumulativePoints'],
+            fields1: ['username','points'],
+            fields2: ['username','sumPoint'],
             tableIndex: 0,
             form: {
               dateStart: '2021-08-01',
@@ -193,6 +208,11 @@ table {
 .wow {
   text-align: center;
   margin-top: 20px;
+}
+.wow {
+  span {
+    margin-right: 5px;
+  }
 }
 
 </style>
