@@ -15,7 +15,9 @@
                     <td>{{ reward.name_reward }}</td>
                     <td>{{ reward.require_points }}</td>
                     <button @click="redeem(index)">Exchange</button>
-                    
+                    <td v-if="isAdmin()">
+                        <router-link :to="{ name: 'RewardEdit', params: { id: reward.id } }">Edit</router-link>
+                    </td>
                 </tr>
                 <router-link to="/reward/add">
                     <button v-if="isAdmin()" >Add Reward</button>
@@ -41,7 +43,6 @@ export default {
             points:"",
             require_points:"",
             name_reward:"",
-
         }
     },
     created(){
@@ -59,12 +60,6 @@ export default {
             } else {
                 return false
             }
-        },
-        editReward(){
-            
-        },
-        deleteReward(){
-
         },
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
