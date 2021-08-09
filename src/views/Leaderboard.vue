@@ -1,5 +1,18 @@
 <template>
-  <div>
+<div>
+  <div class='wow'>
+    Start <input type="Date" v-model="form.dateStart" />
+    End <input type="Date" v-model="form.dateEnd" />
+    <button @click="query()">Query</button>
+  </div>
+  <div v-if="tableIndex === 0">
+    <b-table hover :items="users" :fields="fields" class='wow'></b-table>
+  </div>
+  <div v-if="tableIndex === 1">
+    <b-table hover :items="sumHistory" :fields="fields" class='wow'></b-table>
+  </div>
+</div>
+  <!-- <div class="wow">
     Start <input type="Date" v-model="form.dateStart" />
     End <input type="Date" v-model="form.dateEnd" />
     <button @click="query()">Query</button>
@@ -18,7 +31,7 @@
           <td>{{ user.username }}</td>
           <td>{{ user.points }}</td>
           <td>{{ user.accumulativePoints }}</td>
-          <button @click="logSomething()">Click</button>
+
         </tr>
       </tbody>
 
@@ -36,7 +49,7 @@
           <td>{{ index + 1 }}</td>
           <td>{{ sum.username }}</td>
           <td>{{ sum.sumPoint }}</td>
-          <button @click="logSomething()">Click</button>
+
         </tr>
       </tbody>
     </table>
@@ -45,7 +58,8 @@
       <button @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</button>
       <button @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</button>
     </div>
-  </div>
+
+  </div> -->
 </template>
 
 <script>
@@ -59,6 +73,7 @@ export default {
             users: [],
             pointHistory: [],
             sumHistory: [],
+            fields: ['username','points','accumulativePoints'],
             tableIndex: 0,
             form: {
               dateStart: '2021-08-01',
@@ -175,4 +190,9 @@ table {
     margin: auto;
     width: 66%;
 }
+.wow {
+  text-align: center;
+  margin-top: 20px;
+}
+
 </style>

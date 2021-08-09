@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
 
-        <table>
+        <table class='wow'>
             <thead>
                 <th>NO.</th>
                 <th>Reward</th>
@@ -78,18 +78,26 @@ export default {
             }  
             
         },
-        // async usePoint(index) {
-        //     let payload = {
-        //         id: AuthUser.getters.user.id,
-        //         points: this.points
-        //     }
-        //     await UserApi.dispatch("editPoint", payload)
-        //     await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
-        // },
+        async usePoint(index) {
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            await UserApi.dispatch("editPoint", payload)
+            await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+            this.getPoint()
+        },
+        logSomething()
+        {
+            console.log(this.points);
+        }
+
     }
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.wow {
+  text-align: center;
+}
 </style>
