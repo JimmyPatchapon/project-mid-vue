@@ -51,6 +51,7 @@
 
 import AuthUser from '@/store/AuthUser'
 export default {
+
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen

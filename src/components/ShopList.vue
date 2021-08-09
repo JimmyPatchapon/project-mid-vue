@@ -59,4 +59,7 @@ img {
   width: 200px;
   margin-bottom: 10px;
 }
+.card:hover{
+  background-color: rgb(251, 205, 53);
+}
 </style>

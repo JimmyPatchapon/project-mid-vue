@@ -10,7 +10,7 @@
       <button @click="increase">+</button>
     </div>
     <div>in stock: {{item.quantity}}</div><br>
-    <button @click="buy">Buy</button>
+    <button @click="buy()">Buy</button>
   </div>
 </template>
 
@@ -18,6 +18,7 @@
 import ShopService from '@/services/ShopService'
 import ItemStore from '@/store/Item'
 import AuthService from '@/services/AuthService'
+import AuthUser from '@/store/AuthUser'
 import UserApi from '@/store/UsersApi'
 export default {
   data() {
@@ -46,33 +47,41 @@ export default {
     },
     async buy() {
       // 100 bath get 1 point
-      let user = AuthService.getUser()
-      let points = Math.floor(this.item.prices*this.number/100)
-      let payload = {
-        id: this.id,
-        quantity: this.item.quantity - this.number
+      if(this.item.quantity>0){
+        let user = AuthUser.getters.user
+        console.log(user);
+        let points = Math.floor(this.item.prices*this.number/100)
+        let payload = {
+          id: this.id,
+          quantity: this.item.quantity - this.number
+        }
+        let res1 = await ItemStore.dispatch('editItemQuantity', payload)
+        let res2 = await ShopService.purchase(this.id, this.number)
+        let res3 = await ShopService.receivePoint(this.item.name, points, user)
+        this.editPoint(points, user)
+        if(res1.success & res2.success & res3.success) {
+          this.$swal("Buy Success", this.item.name+" x"+this.number, "success")
+          this.$router.push("/")
+        } else if(!res1.success) {
+          this.$swal("Buy Failed", res1.message, "error")
+        } else if(!res2.success) {
+          this.$swal("Buy Failed", res2.message, "error")
+        } else {
+          this.$swal("Buy Failed", res3.message, "error")
+        }
       }
-      let res1 = await ItemStore.dispatch('editItemQuantity', payload)
-      let res2 = await ShopService.purchase(this.id, this.number)
-      let res3 = await ShopService.receivePoint(this.item.name, points, user)
-      this.editPoint(points, user)
-      if(res1.success & res2.success & res3.success) {
-        this.$swal("Buy Success", this.item.name+" x"+this.number, "success")
-        this.$router.push("/")
-      } else if(!res1.success) {
-        this.$swal("Buy Failed", res1.message, "error")
-      } else if(!res2.success) {
-        this.$swal("Buy Failed", res2.message, "error")
-      } else {
-        this.$swal("Buy Failed", res3.message, "error")
+      else{
+        this.$swal("Buy Failed",this.item.name+" out of stock","error")
       }
+      
     },
     async editPoint(amount, user) {
       let payload = {
         id: user.id,
         points: parseInt(user.points) + amount
       }
-      await UserApi.dispatch("editPoint", payload)
+      console.log(payload);
+      await AuthUser.dispatch("editPoint", payload)
     }
   }
 }

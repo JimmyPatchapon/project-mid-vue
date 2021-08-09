@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import AuthService from "@/services/AuthService"
+
 Vue.use(Vuex)
 
 const auth_key = "auth-user"
@@ -22,6 +23,7 @@ export default new Vuex.Store({
             state.jwt = jwt
             state.isAuthen = true
             state.isAdmin = user.role.name === "Administration"
+            console.log(state.user);
         },
         logoutSuccess (state) {
             state.user = ""
@@ -51,6 +53,14 @@ export default new Vuex.Store({
             }
             return res
         },
+        async editPoint({commit}, payload){
+            let res = await AuthService.update(payload)
+            console.log(res);
+            if(res.success){
+                commit("loginSuccess",res.user,res.jwt)
+            }
+            return res
+        }
         
     },
     getters: {

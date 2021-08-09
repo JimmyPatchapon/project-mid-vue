@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import Axios from "axios"
+import AuthService from "@/services/AuthService"
 
 const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
@@ -17,12 +18,53 @@ export default new Vuex.Store({
         fetch(state, {res}){
             state.data = res.data
         },
-        
+        edit(state, index, data) {
+            state.data[index] = data
+        },
+         
     },
     actions: {
         async fetchEventList({commit}){
             let res = await Axios.get(api_endpoint + "/events")
             commit("fetch", {res})
+        },
+        async buttonDisable({commit}, payload){
+            let url = api_endpoint + "/events/" + payload.id
+            let body = {
+                event_name: payload.event_name,
+                earn_point: payload.earn_point,
+                button: payload.button
+            }
+            try {
+                let headers = AuthService.getApiHeader()
+                let res = await Axios.put(url, body, headers)
+                if(res.status === 200) {
+                    commit("edit", payload.id, res.data)
+                    return {
+                        success: true,
+                        data: res.data
+                    }
+                }else {
+                    console.error(res)
+                    return {
+                        success: false,
+                        message: "Unknown status code: " + res.status
+                    }
+                }
+            } catch(e) {
+                if(e.response.status === 403) {
+                    console.error(e.response.data.message)
+                    return {
+                        success: false,
+                        message: e.response.data.message
+                    }
+                } else {
+                    return {
+                        success: false,
+                        message: "Unknown error: " + e.response.data
+                    }
+                }
+            }
         },
     },
     

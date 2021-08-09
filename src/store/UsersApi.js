@@ -21,6 +21,7 @@ export default new Vuex.Store({
           state.data.push(payload)
       },
       edit(state, index, data) {
+        console.log(data);
           state.data[index] = data
       },
   },
@@ -45,6 +46,11 @@ export default new Vuex.Store({
             let res = await Axios.put(url, body, headers)
             if(res.status === 200) {
               commit("edit", payload.id, res.data)
+              let payload1={
+                id:this.id,
+                points:this.points
+              }
+              AuthService.update(payload1)
               return {
                 success: true,
                 data: res.data

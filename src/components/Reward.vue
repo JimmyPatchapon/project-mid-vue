@@ -8,6 +8,7 @@
                 <th>NO.</th>
                 <th>Reward</th>
                 <th>Point</th>
+                <th></th>
             </thead>
             <tbody>
                 <tr v-for="(reward, index) in rewards" :key="index">
@@ -26,7 +27,7 @@
             </tbody>
             
         </table>
-        <button @click="logSomething()">Hey</button>
+        
     </div>
 </template>
 
@@ -35,7 +36,7 @@ import rewardApi from "@/store/rewardApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import RewardService from "@/services/RewardService"
-
+import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
@@ -83,21 +84,32 @@ export default {
                 id: AuthUser.getters.user.id,
                 points: this.points
             }
-            await UserApi.dispatch("editPoint", payload)
+            await AuthUser.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
-            this.getPoint()
         },
-        logSomething()
-        {
-            console.log(this.points);
-        }
+        
+
 
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.wow {
-  text-align: center;
+
+table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse ;
+  border-radius: 5px;
 }
+th {
+  background-color: antiquewhite;
+  border-bottom: 1px solid black;
+}
+td {
+  margin-top: 100px;
+  padding: 5px;
+}
+tr:hover {background-color: #ddd;}
 </style>
+

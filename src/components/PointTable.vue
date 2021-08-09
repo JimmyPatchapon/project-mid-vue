@@ -92,4 +92,5 @@ table.point-earn{
   margin: 20px;
   border-collapse: collapse;
 }
+tr:hover {background-color: #ddd;}
 </style>>
