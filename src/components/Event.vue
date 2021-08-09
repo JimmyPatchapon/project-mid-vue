@@ -9,6 +9,7 @@
                   <th>Name</th>
                   <th>Total</th>
                   <th>Point</th>
+                  <th></th>
               </thead>
               <tbody>
                   <tr v-for="(event, index) in events" :key="index">
@@ -16,7 +17,9 @@
                       <td>{{ event.event_name }}</td>
                       <td>{{ event.total }}</td>
                       <td>{{ event.earn_point }}</td>
-                      <button @click="earn(index)">claim</button> 
+                      <td>
+                        <button :disabled="buttonDisable(index)" @click="earn(index)">claim</button>
+                      </td>
                   </tr>
               </tbody>
           </table>
@@ -32,14 +35,12 @@ import EventService from "@/services/EventService"
 export default {
     data(){
         return{
-            claimIndex:-1,
             events:[],
             points:"",
             id:"",
             event_name:"",
             total:"",
             earn_point:"",
-            claim_button: "",
         }
     },
     created(){
@@ -58,25 +59,56 @@ export default {
             if(this.events[index].total<=AuthUser.getters.user.accumulativePoints){
                 this.points+=this.events[index].earn_point
                 this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
+                this.events[index].button = true
+                this.disableEvent(index)
                 this.earnPoint(index)
             }else{
                 this.$swal("Point are not enough","","error")
             }
         },
-        // async earnPoint(index){
-        //     let payload = {
-        //         id: AuthUser.getters.user.id,
-        //         points: this.points
-        //     }
-        //     console.log(payload.points);
-        //     await UserApi.dispatch("editPoint", payload)
-        //     await EventService.earnPoint(this.events[index].event_name, this.points)
-        // },
+        buttonDisable(index){
+            return this.events[index].button
+        },
+        async disableEvent(index){
+            let payload = {
+                id:this.events[index].id,
+                event_name: this.events[index].event_name,
+                earn_point: this.events[index].earn_point,
+                button: this.events[index].button
+            }   
+            await EventListApi.dispatch("buttonDisable", payload)
+            this.fetchEventList()
+        },
+        async earnPoint(index){
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            await UserApi.dispatch("editPoint", payload)
+            
+            await EventService.earnPoint(this.events[index].event_name, this.events[index].earn_point)
+
+            this.getPoint()
+        },
     },
 
 }
 </script>
 
 <style lang="scss" scoped>
+table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse ;
+  border-radius: 5px;
+}
+th {
+  background-color: antiquewhite;
+  border-bottom: 1px solid black;
+}
+td {
+  padding: 5px;
+}
+tr:hover {background-color: #ddd;}
 
 </style>>
