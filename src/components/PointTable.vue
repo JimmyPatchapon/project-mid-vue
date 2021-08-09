@@ -16,6 +16,23 @@
         </tr>
       </tbody> 
     </table>
+
+    <table class="point-earn">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Detail</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(i,index) in pointEarn" :key="index">
+          <td v-if="checkname(i.users[0].username)">{{i.date}}</td>
+          <td class="detail" v-if="checkname(i.users[0].username)">{{i.detail}}</td>
+          <td v-if="checkname(i.users[0].username)">{{i.amount}}</td>
+        </tr>
+      </tbody> 
+    </table>
   </div>
 </template>
 
@@ -25,11 +42,13 @@ import AuthUser from "@/store/AuthUser"
 export default {
   data() {
     return {
-      pointList: []
+      pointList: [],
+      pointEarn: []
     }
   },
   created() {
     this.fetchPointList()
+    this.fetchPointEarn()
   },
   methods: {
     async fetchPointList() {
@@ -43,7 +62,11 @@ export default {
       }
       return false
     },
-    
+    async fetchPointEarn() {
+      await PointStore.dispatch('fetchPointEarn')
+      this.pointEarn = PointStore.getters.pointEarn
+      console.log(this.pointEarn)
+    }
   }
 }
 </script>
@@ -64,5 +87,9 @@ td {
 .detail {
   width: 50%;
   text-align: left;
+}
+table.point-earn{
+  margin: 20px;
+  border-collapse: collapse;
 }
 </style>>

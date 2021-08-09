@@ -51,13 +51,7 @@ export default new Vuex.Store({
             }
             return res
         },
-        async editPoint({ commit }, {username, points}){
-            let res = await AuthService.editPoint({username,points})
-            if(res.success){
-                commit("")
-            }
-            return res
-        }
+        
     },
     getters: {
         user: (state) => state.user,

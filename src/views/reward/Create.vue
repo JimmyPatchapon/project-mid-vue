@@ -1,15 +1,18 @@
 <template>
   <div>
       <RewardCreateForm></RewardCreateForm>
+      <reward-edit></reward-edit>
   </div>
 </template>
 
 <script>
 import RewardCreateForm from "@/components/reward/RewardCreateForm"
 import AuthUser from "@/store/AuthUser"
+import RewardEdit from '@/components/reward/RewardEdit.vue'
 export default {
     components: {
-        RewardCreateForm
+        RewardCreateForm,
+        RewardEdit
     },
     created() {
       if (!this.isAdmin())
