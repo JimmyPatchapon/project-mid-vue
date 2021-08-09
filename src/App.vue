@@ -26,7 +26,6 @@
         <b-nav-item v-if="this.isAdmin()" to="/leaderboard">Leaderboard</b-nav-item>
         <b-nav-item v-if="isAuthen()" to="/eventList">Event</b-nav-item>
         <b-nav-item v-if="isAuthen()" to="/reward">Reward</b-nav-item>
-        <b-nav-item v-if="isAuthen()" to="/logout">Logout</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -52,7 +51,7 @@
 
 import AuthUser from '@/store/AuthUser'
 export default {
-  
+
   methods: {
     isAuthen() {
       return AuthUser.getters.isAuthen
