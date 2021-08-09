@@ -42,7 +42,6 @@ export default {
             points:"",
             require_points:"",
             name_reward:"",
-
         }
     },
     created(){
@@ -61,12 +60,6 @@ export default {
                 return false
             }
         },
-        editReward(){
-            
-        },
-        deleteReward(){
-
-        },
         async fetchReward(){
             await rewardApi.dispatch("fetchReward")
             this.rewards = rewardApi.getters.rewards
@@ -84,14 +77,16 @@ export default {
             }  
             
         },
-        // async usePoint(index) {
-        //     let payload = {
-        //         id: AuthUser.getters.user.id,
-        //         points: this.points
-        //     }
-        //     await UserApi.dispatch("editPoint", payload)
-        //     await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
-        // },
+        async usePoint(index) {
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            await UserApi.dispatch("editPoint", payload)
+            
+            await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+            this.getPoint()
+        },
         
 
     }

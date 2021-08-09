@@ -61,7 +61,7 @@ export default {
                 this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
                 this.events[index].button = true
                 this.disableEvent(index)
-                // this.earnPoint(index)
+                this.earnPoint(index)
             }else{
                 this.$swal("Point are not enough","","error")
             }
@@ -79,14 +79,17 @@ export default {
             await EventListApi.dispatch("buttonDisable", payload)
             this.fetchEventList()
         },
-        // async earnPoint(index){
-        //     let payload = {
-        //         id: AuthUser.getters.user.id,
-        //         points: this.points
-        //     }
-        //     await UserApi.dispatch("editPoint", payload)
-        //     await EventService.earnPoint(this.events[index].event_name, this.points)
-        // },
+        async earnPoint(index){
+            let payload = {
+                id: AuthUser.getters.user.id,
+                points: this.points
+            }
+            await UserApi.dispatch("editPoint", payload)
+            
+            await EventService.earnPoint(this.events[index].event_name, this.events[index].earn_point)
+
+            this.getPoint()
+        },
     },
 
 }
