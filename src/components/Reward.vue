@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
 
-        <table>
+        <table class='wow'>
             <thead>
                 <th>NO.</th>
                 <th>Reward</th>
@@ -101,6 +101,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.wow {
+  text-align: center;
+}
 </style>
