@@ -1,8 +1,7 @@
 <template>
-  <div id="app">
+  <!-- <div id="app" class="nav">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
       <router-link v-if="this.isAdmin()" to="/leaderboard">Leaderboard</router-link>
       <span v-if="isAdmin()"> |</span> 
       <router-link v-if="!isAuthen()" to="/register">Register</router-link>
@@ -13,10 +12,21 @@
       <router-link v-if="isAuthen()" to="/reward-user">Reward</router-link>
       <span v-if="isAuthen()"> |</span> 
       <router-link v-if="isAuthen()" to="/logout">Logout</router-link>
-      
-      <!-- <button @click="logSomething()">Log</button> -->
     </div>
     <router-view/>
+  </div> -->
+  <div>
+    <b-navbar type="dark" variant="dark">
+      <b-navbar-brand href="#">App</b-navbar-brand>
+        <router-link to="/">Home</router-link> |
+      <router-link v-if="this.isAdmin()" to="/leaderboard">Leaderboard</router-link>
+      <span v-if="isAdmin()"> |</span> 
+      <router-link v-if="!isAuthen()" to="/register">Register</router-link>
+      
+      <b-navbar-nav class="ml-auto">
+        <router-link v-if="isAuthen()" to="/member">Member</router-link> |
+      </b-navbar-nav>
+    </b-navbar>
   </div>
 </template>
 
@@ -65,7 +75,6 @@ export default {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
 
     &.router-link-exact-active {
       color: #42b983;
@@ -74,5 +83,11 @@ export default {
   span {
     margin-right: 4px;
   }
+}
+button {
+  a {
+    color: white;
+  }
+  
 }
 </style>

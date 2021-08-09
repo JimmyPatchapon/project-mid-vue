@@ -1,6 +1,7 @@
 <template>
   <div>
-    Start <input type="Date" v-model="form.dateStart" />
+    
+    <!-- Start <input type="Date" v-model="form.dateStart" />
     End <input type="Date" v-model="form.dateEnd" />
     <button @click="query()">Query</button>
       <table v-if="tableIndex === 0">
@@ -18,7 +19,7 @@
           <td>{{ user.username }}</td>
           <td>{{ user.points }}</td>
           <td>{{ user.accumulativePoints }}</td>
-          <button @click="logSomething()">Click</button>
+
         </tr>
       </tbody>
 
@@ -36,7 +37,7 @@
           <td>{{ index + 1 }}</td>
           <td>{{ sum.username }}</td>
           <td>{{ sum.sumPoint }}</td>
-          <button @click="logSomething()">Click</button>
+
         </tr>
       </tbody>
     </table>
@@ -44,7 +45,8 @@
     <div>
       <button @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</button>
       <button @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</button>
-    </div>
+    </div> -->
+
   </div>
 </template>
 
