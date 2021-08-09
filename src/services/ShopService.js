@@ -38,7 +38,7 @@ export default {
         }
       }
     } catch(e) {
-      if(e.response.satus === 403) {
+      if(e.response.status === 403) {
         console.error(e.response.data.message)
         return {
           success: false,
@@ -60,7 +60,7 @@ export default {
 
     let body ={
       users: user.id,
-      detail: "100 bath get 1 point from buy " + itemName,
+      detail: "100 Baht get 1 point from buy " + itemName,
       amount: amount,
       date: (new Date()).toISOString().slice(0,10)
     }

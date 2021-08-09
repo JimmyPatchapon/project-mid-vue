@@ -2,8 +2,28 @@
     <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
+        <b-table head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields" class='text-left' v-if="isAdmin()">
+            <template #cell(redeem)=row>
+                <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
+                    Earn
+                </b-button>
+            </template>
+            <template #cell(edit)=row>
+                <b-button :to='`/reward/${rewards[row.index].id}/edit`' variant='danger' size="sm" class="mr-1">
+                    Edit
+                </b-button>
+            </template>
+        </b-table>
 
-        <table class='wow'>
+        <b-table head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields2" class='text-left' v-if="!isAdmin()">
+            <template #cell(redeem)=row>
+                <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
+                    Earn
+                </b-button>
+            </template>
+        </b-table>        
+
+        <!-- <table class='wow'>
             <thead>
                 <th>NO.</th>
                 <th>Reward</th>
@@ -26,7 +46,7 @@
                 
             </tbody>
             
-        </table>
+        </table> -->
         
     </div>
 </template>
@@ -40,6 +60,9 @@ import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
+            fields: ['id','name_reward','require_points','redeem','edit'],
+            fields2: ['id','name_reward','require_points','redeem'],
+            rewards:[],
             rewards:[],
             points:"",
             require_points:"",

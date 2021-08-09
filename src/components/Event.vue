@@ -1,8 +1,21 @@
 <template>
   <div>
-      <h1>Event</h1>
-      <h2>Total: {{ points }}</h2>
-      <div>
+      <h1 class='text-center'>Event</h1>
+      <h2 class='text-center'>Total: {{ points }}</h2>
+      <br>
+        <div class='wow'>
+            <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'>
+                <template #cell(earn)=row>
+                    <b-button variant='warning' size="sm" disabled="buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
+                        Earn
+                    </b-button>
+                </template>
+            </b-table>
+            
+        </div>
+      <!-- <div>
+        <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'></b-table>
+          
           <table>
               <thead>
                   <th>NO.</th>
@@ -23,7 +36,7 @@
                   </tr>
               </tbody>
           </table>
-      </div>
+      </div> -->
   </div>
 </template>
 
@@ -36,6 +49,7 @@ import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
+            fields:['event_name','total','earn_point','earn'],
             events:[],
             points:"",
             id:"",
@@ -94,19 +108,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-  width: 100%;
-  border: 1px solid black;
-  border-collapse: collapse ;
-  border-radius: 5px;
+// table {
+//   width: 100%;
+//   border: 1px solid black;
+//   border-collapse: collapse ;
+//   border-radius: 5px;
+// }
+// th {
+//   background-color: antiquewhite;
+//   border-bottom: 1px solid black;
+// }
+// td {
+//   padding: 5px;
+// }
+// tr:hover {background-color: #ddd;}
+.wow {
+    text-align: center;
 }
-th {
-  background-color: antiquewhite;
-  border-bottom: 1px solid black;
-}
-td {
-  padding: 5px;
-}
-tr:hover {background-color: #ddd;}
-
 </style>>
