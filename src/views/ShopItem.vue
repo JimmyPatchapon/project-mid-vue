@@ -73,7 +73,6 @@ export default {
         points: parseInt(user.points) + amount
       }
       await UserApi.dispatch("editPoint", payload)
-      AuthService.reloadPoints(payload.points)
     }
   }
 }
