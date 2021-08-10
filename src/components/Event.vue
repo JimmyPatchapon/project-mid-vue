@@ -6,7 +6,7 @@
         <div class='wow'>
             <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'>
                 <template #cell(earn)=row>
-                    <b-button variant='warning' size="sm" :disabled="buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
+                    <b-button variant='warning' size="sm" :disabled="!buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
                         Earn
                     </b-button>
                 </template>
@@ -89,7 +89,7 @@ export default {
                 id:this.events[index].id,
                 event_name: this.events[index].event_name,
                 earn_point: this.events[index].earn_point,
-                button: this.events[index].button
+                button: true
             }   
             await EventListApi.dispatch("buttonDisable", payload)
             this.fetchEventList()

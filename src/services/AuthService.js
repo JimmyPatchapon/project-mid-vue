@@ -135,6 +135,7 @@ export default{
                 points: payload.points,
             }
             let headers = this.getApiHeader()
+            console.log(headers);
             let res = await Axios.put(url, body, headers)
             let newData = {
                 jwt: this.jwt,
