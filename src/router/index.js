@@ -8,6 +8,7 @@ import Register from '@/views/auth/Register'
 import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
+import EditItem from '@/views/item/Edit'
 import Member from '@/views/Member'
 import Create from '@/views/reward/Create'
 import RewardEdit from '@/views/reward/Edit'
@@ -45,6 +46,11 @@ const routes = [
     path: '/shop/:id',
     name: 'ShopItem',
     component: ShopItem
+  },
+  {
+    path: '/shop/:id/edit',
+    name: 'EditItem',
+    component: EditItem
   },
   {
     path: '/member',
