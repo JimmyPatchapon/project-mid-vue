@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import EventListApi from "@/store/eventListApi"
+import EventListApi from "@/store/EventListApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import EventService from "@/services/EventService"
