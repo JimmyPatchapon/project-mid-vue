@@ -124,5 +124,7 @@ export default {
 // tr:hover {background-color: #ddd;}
 .wow {
     text-align: center;
+    width: 66%;
+    margin: auto
 }
 </style>>

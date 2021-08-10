@@ -119,20 +119,25 @@ export default {
 
 <style lang="scss" scoped>
 
-table {
-  width: 100%;
-  border: 1px solid black;
-  border-collapse: collapse ;
-  border-radius: 5px;
+// table {
+//   width: 100%;
+//   border: 1px solid black;
+//   border-collapse: collapse ;
+//   border-radius: 5px;
+// }
+// th {
+//   background-color: antiquewhite;
+//   border-bottom: 1px solid black;
+// }
+// td {
+//   margin-top: 100px;
+//   padding: 5px;
+// }
+// tr:hover {background-color: #ddd;}
+.wow {
+    text-align: center;
+    width: 66%;
+    margin: auto
 }
-th {
-  background-color: antiquewhite;
-  border-bottom: 1px solid black;
-}
-td {
-  margin-top: 100px;
-  padding: 5px;
-}
-tr:hover {background-color: #ddd;}
 </style>
 

@@ -25,6 +25,7 @@
     <b-button variant='info' @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</b-button>
     <b-button variant='danger' @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</b-button>
   </div>
+  
 </div>
   <!-- <div class="wow">
     Start <input type="Date" v-model="form.dateStart" />
@@ -74,6 +75,7 @@
     </div>
 
   </div> -->
+  
 </template>
 
 <script>
@@ -138,7 +140,7 @@ export default {
             })
         },        
         logSomething() {
-          console.table(this.pointHistory)
+          console.log(this.pointHistory)
         },
         changeTable() {
           if (this.tableIndex === 0){
