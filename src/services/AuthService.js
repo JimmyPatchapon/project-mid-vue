@@ -133,6 +133,7 @@ export default{
             let body = {
                 id: payload.id,
                 points: payload.points,
+                stock: payload.stock
             }
             let headers = this.getApiHeader()
             console.log(headers);
