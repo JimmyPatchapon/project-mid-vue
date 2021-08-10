@@ -57,6 +57,7 @@ import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import RewardService from "@/services/RewardService"
 import AuthService from "@/services/AuthService"
+import CouponService from "@/services/CouponService"
 export default {
     data(){
         return{
@@ -64,6 +65,7 @@ export default {
             fields2: ['id','name_reward','require_points','redeem'],
             rewards:[],
             rewards:[],
+            stock:"",
             points:"",
             require_points:"",
             name_reward:"",
@@ -106,14 +108,12 @@ export default {
             let payload = {
                 id: AuthUser.getters.user.id,
                 points: this.points,
-                stock: this.this.rewards[index].stock - 1
+                stock: this.rewards[index].stock - 1
             }
             await AuthUser.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+            await CouponService.addCoupon(this.rewards[index].name_reward)
         },
-        
-
-
     }
 }
 </script>

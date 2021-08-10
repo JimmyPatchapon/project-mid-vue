@@ -7,6 +7,7 @@
           <div>Point: {{user.points}}</div>
         </b-card-text>
       </b-card>
+      <coupon-table></coupon-table>
     <point-table></point-table>
   </div>
 </template>
@@ -14,9 +15,11 @@
 <script>
 import AuthUser from '@/store/AuthUser'
 import PointTable from '@/components/PointTable'
+import CouponTable from '@/components/CouponTable'
 export default {
   components: {
-    PointTable
+    PointTable,
+    CouponTable
   },
   data() {
     return {
