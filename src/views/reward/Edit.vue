@@ -12,7 +12,7 @@
           id="input-1"
           v-model="form.name_reward"
           type="text"
-          placeholder="word"
+          placeholder="Reward Name"
           required
         ></b-form-input>
       </b-form-group>
@@ -22,6 +22,15 @@
           id="input-2"
           v-model="form.require_points"
           placeholder="Enter Required Points"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-3" label="Stocks" label-for="input-3">
+        <b-form-input
+          id="input-3"
+          v-model="form.stock"
+          placeholder="Enter Stock"
           required
         ></b-form-input>
       </b-form-group>
@@ -60,7 +69,8 @@ export default {
       id: '',
       form: {
         name_reward: '',
-        require_points: ''
+        require_points: '',
+        stock: ''
       }
     }
   },
@@ -69,13 +79,15 @@ export default {
     let reward = await RewardService.getRewardById(this.id)
     this.form.name_reward = reward.name_reward
     this.form.require_points = reward.require_points
+    this.form.stock = reward.stock
   },
   methods: {
     async editReward() {
       let payload = {
         id: this.id,
         name_reward: this.form.name_reward,
-        require_points: this.form.require_points
+        require_points: this.form.require_points,
+        stock: parseInt(this.form.stock)
       }
       let res = await RewardApiStore.dispatch('editReward', payload)
       if(res.success) {

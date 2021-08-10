@@ -2,10 +2,10 @@
     <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
-        <b-table head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields" class='text-left' v-if="isAdmin()">
+        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields" class='text-left' v-if="isAdmin()">
             <template #cell(redeem)=row>
                 <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
-                    Earn
+                    Redeem
                 </b-button>
             </template>
             <template #cell(edit)=row>
@@ -14,15 +14,15 @@
                 </b-button>
             </template>
         </b-table>
-
-        <b-table head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields2" class='text-left' v-if="!isAdmin()">
+        
+        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields2" class='text-left' v-if="!isAdmin()">
             <template #cell(redeem)=row>
                 <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
-                    Earn
+                    Redeem
                 </b-button>
             </template>
         </b-table>        
-
+        <b-button variant='primary' class="mr-1" to="/reward/add">Add Reward</b-button>
         <!-- <table class='wow'>
             <thead>
                 <th>NO.</th>
@@ -60,8 +60,8 @@ import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
-            fields: ['id','name_reward','require_points','redeem','edit'],
-            fields2: ['id','name_reward','require_points','redeem'],
+            fields: ['id','name_reward','require_points','stock','redeem','edit'],
+            fields2: ['id','name_reward','require_points','stock','redeem'],
             rewards:[],
             rewards:[],
             points:"",
@@ -93,23 +93,41 @@ export default {
             this.points = AuthUser.getters.user.points
         },
         redeem(index){
-            if(this.points>=this.rewards[index].require_points && this.rewards[index].stock>0){
+            console.log(this.rewards);
+            try {
+                if(this.points>=this.rewards[index].require_points && this.rewards[index].stock > 0){
                 this.points-=this.rewards[index].require_points 
                 this.usePoint(index)
                 this.$swal("Redeem Success", "", "success")
             }else{
+                if (this.points < this.rewards[index].require_points)
                 this.$swal("Your points are not enough","", "error")
-            }  
+                else if(this.rewards[index].stock === 0)
+                this.$swal("Reward Out of Stock","", "error")
+            } 
+            } catch (error) {
+                console.log(error);
+            }
+ 
             
         },
         async usePoint(index) {
+            this.rewards[index].stock -= 1
             let payload = {
                 id: AuthUser.getters.user.id,
                 points: this.points,
-                stock: this.this.rewards[index].stock - 1
+                stock: parseInt(this.rewards[index].stock)
+            }
+            let payload1 = {
+                id: this.rewards[index].id,
+                // name_reward: this.rewards[index].name_reward,
+                // require_points: this.rewards[index].require_points,
+                stock: payload.stock
             }
             await AuthUser.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
+            await rewardApi.dispatch("editReward",payload1)
+            this.fetchReward()
         },
         
 

@@ -4,8 +4,13 @@
     <div class='wow'>
       <b-container>
       <b-row>
-        <b-col>Start <b-form-datepicker id="example-datepicker" v-model="form.dateStart"></b-form-datepicker></b-col>
-        <b-col>End <b-form-datepicker id="example-datepicker" v-model="form.dateEnd"></b-form-datepicker></b-col>
+        <b-col>
+          Start <b-form-datepicker id="example-datepicker" v-model="form.dateStart"></b-form-datepicker>
+        </b-col>
+        <b-col>
+          End <b-form-datepicker id="example-datepicker2" v-model="form.dateEnd">
+            </b-form-datepicker>
+        </b-col>
       </b-row>
       <br>
         <b-button variant='warning' @click="query()">Query</b-button>
