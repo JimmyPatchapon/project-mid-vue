@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <table>
+  <div class='wow'>
+    <div>
+      <h1>Point Used</h1> 
+      <b-table head-variant='dark' striped outlined hover fixed :items="pointList" :fields="fields" class='text-left' :filter='this.user'></b-table>
+    </div>
+    <div>
+      <h1>Point Gained</h1> 
+      <b-table head-variant='dark' striped outlined hover fixed :items="pointEarn" :fields="fields" class='text-left' :filter='this.user'></b-table>
+    </div>
+    
+    <!-- <table>
       <thead>
         <tr>
           <th>Date</th>
@@ -15,9 +24,9 @@
           <td v-if="checkname(i.users[0].username)">{{i.amount}}</td>
         </tr>
       </tbody> 
-    </table>
+    </table> -->
 
-    <table class="point-earn">
+    <!-- <table class="point-earn">
       <thead>
         <tr>
           <th>Date</th>
@@ -32,7 +41,7 @@
           <td v-if="checkname(i.users[0].username)">{{i.amount}}</td>
         </tr>
       </tbody> 
-    </table>
+    </table> -->
   </div>
 </template>
 
@@ -42,6 +51,8 @@ import AuthUser from "@/store/AuthUser"
 export default {
   data() {
     return {
+      user: '',
+      fields: ['date','detail','amount'],
       pointList: [],
       pointEarn: []
     }
@@ -49,6 +60,7 @@ export default {
   created() {
     this.fetchPointList()
     this.fetchPointEarn()
+    this.getUser()
   },
   methods: {
     async fetchPointList() {
@@ -65,32 +77,18 @@ export default {
     async fetchPointEarn() {
       await PointStore.dispatch('fetchPointEarn')
       this.pointEarn = PointStore.getters.pointEarn
-      console.log(this.pointEarn)
+    },
+    getUser() {
+      this.user = AuthUser.getters.user.username
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-table {
-  width: 60%;
-  border: 1px solid black;
-  border-collapse: collapse;
+.wow {
+  width: 66%;
+  margin: auto;
 }
-th {
-  background-color: antiquewhite;
-  border-bottom: 1px solid black;
-}
-td {
-  padding: 5px;
-}
-.detail {
-  width: 50%;
-  text-align: left;
-}
-table.point-earn{
-  margin: 20px;
-  border-collapse: collapse;
-}
-tr:hover {background-color: #ddd;}
+
 </style>>

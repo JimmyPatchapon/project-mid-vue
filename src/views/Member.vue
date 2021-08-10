@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <aside>
-      <img src="@/assets/logo.png" alt="">
-      <div>{{user.username}}</div>
-      <div class="email">[ {{user.email}} ]</div>
-      <div>{{user.points}}</div>
-    </aside>
+  <div class='text-left'>
+      <b-card bg-variant="dark" text-variant="white" title="Profile" class="text-center">
+        <b-card-text class="biggerText">
+          <div>Username: {{user.username}}</div>
+          <div class="email">[ {{user.email}} ]</div>
+          <div>Point: {{user.points}}</div>
+        </b-card-text>
+      </b-card>
     <point-table></point-table>
   </div>
 </template>
@@ -24,7 +25,6 @@ export default {
   },
   created() {
     this.user = AuthUser.getters.user
-    console.log(this.user);
     if(!this.isAuthen()) {
       this.$swal("Restricted Area", "You have no permission","warning")
       this.$router.push("/")
@@ -49,6 +49,10 @@ aside {
   padding: 20px 0;
 }
 .email {
-  font-size: 0.75em;
+  font-size: 1.25em;
+}
+.biggerText {
+  font-size: 1.4em;
+  text-align: center
 }
 </style>>

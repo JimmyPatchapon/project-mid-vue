@@ -3,14 +3,22 @@
     <img :src="createUrl(item.picture.url)" alt="">
     <h1>{{item.name}}</h1>
     <h2>฿{{item.prices}}</h2>
-    <div>{{item.details}}</div><br>
+    Description
+    <br>
+    <div><i>{{item.details}}</i></div><br>
     <div>
-      <button @click="decrease">-</button>
+      <span>
+        <b-button variant='danger' @click="decrease">-</b-button>
+      </span>
+      
       <input type="text" v-model="number">
-      <button @click="increase">+</button>
+      <span>
+        <b-button variant='success' @click="increase">+</b-button>
+      </span>
+      
     </div>
-    <div>in stock: {{item.quantity}}</div><br>
-    <button @click="buy()">Buy</button>
+    <div><strong>In Stock: {{item.quantity}}</strong> </div><br>
+    <b-button variant='success' @click="buy()">Buy</b-button>
   </div>
 </template>
 
@@ -46,10 +54,8 @@ export default {
         this.number--
     },
     async buy() {
-      // 100 bath get 1 point
       if(this.item.quantity>0){
         let user = AuthUser.getters.user
-        console.log(user);
         let points = Math.floor(this.item.prices*this.number/100)
         let payload = {
           id: this.id,
@@ -59,7 +65,7 @@ export default {
         let res2 = await ShopService.purchase(this.id, this.number)
         let res3 = await ShopService.receivePoint(this.item.name, points, user)
         this.editPoint(points, user)
-        if(res1.success & res2.success & res3.success) {
+        if(res1.success && res2.success && res3.success) {
           this.$swal("Buy Success", this.item.name+" x"+this.number, "success")
           this.$router.push("/")
         } else if(!res1.success) {
@@ -80,7 +86,6 @@ export default {
         id: user.id,
         points: parseInt(user.points) + amount
       }
-      console.log(payload);
       await AuthUser.dispatch("editPoint", payload)
     }
   }
@@ -98,5 +103,11 @@ img {
   border: 1px solid black;
   margin: 10px;
   margin-right: 50px;
+}
+span {
+  padding: 0px 5px;
+}
+i,strong{
+  font-size: 1.25em;
 }
 </style>
