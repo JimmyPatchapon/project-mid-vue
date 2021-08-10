@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Point Use</h3>
     <table>
       <thead>
         <tr>
@@ -17,6 +18,7 @@
       </tbody> 
     </table>
 
+    <h3>Point Earn</h3>
     <table class="point-earn">
       <thead>
         <tr>

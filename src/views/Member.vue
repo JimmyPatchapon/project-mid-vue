@@ -47,6 +47,7 @@ aside {
   margin: 10px;
   margin-right: 50px;
   padding: 20px 0;
+  text-align: center;
 }
 .email {
   font-size: 0.75em;
