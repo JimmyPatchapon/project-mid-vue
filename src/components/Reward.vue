@@ -2,7 +2,7 @@
     <div class='wow'>
         <h1>Reward</h1>
         <h3>Point: {{ points }}</h3>
-        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields" class='text-left' v-if="isAdmin()">
+        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields" class='text-center' v-if="isAdmin()">
             <template #cell(redeem)=row>
                 <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
                     Redeem
@@ -15,7 +15,7 @@
             </template>
         </b-table>
         
-        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields2" class='text-left' v-if="!isAdmin()">
+        <b-table ref='tableId' head-variant='dark' striped outlined hover fixed :items="rewards" :fields="fields2" class='text-center' v-if="!isAdmin()">
             <template #cell(redeem)=row>
                 <b-button variant='success' size="sm" @click="redeem(row.index)" class="mr-1">
                     Redeem

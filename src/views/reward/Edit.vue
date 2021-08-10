@@ -41,22 +41,6 @@
 
     </b-form>
   </div>
-    <!-- <div>
-      <div>
-        <label for="name_reward">Name</label>
-        <input type="text" v-model="form.name_reward">
-      </div>
-      <div>
-        <label for="require_points">Require Points</label>
-        <input type="text" v-model="form.require_points">
-      </div>
-      <div>
-        <button @click="editReward">Edit</button>
-      </div>
-      <div>
-        <button @click="deleteReward">Delete</button>
-      </div>
-    </div>  -->
   </div>
 </template>
 
@@ -100,7 +84,7 @@ export default {
       let payload = {
         id: this.id
       }
-      let res = await RewardApiStore.dispatch('deleteRewaed', payload)
+      let res = await RewardApiStore.dispatch('deleteReward', payload)
       if(res.success) {
         this.$router.push("/reward")
       } else {

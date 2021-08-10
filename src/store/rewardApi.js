@@ -76,7 +76,7 @@ export default new Vuex.Store({
                 }
               }
         },
-        async deleteRewaed({commit}, payload) {
+        async deleteReward({commit}, payload) {
           try {
             let headers = AuthService.getApiHeader()
             let res = await Axios.delete(`${api_endpoint}/rewards/${payload.id}`,headers)
