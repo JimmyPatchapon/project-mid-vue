@@ -23,7 +23,6 @@ export default new Vuex.Store({
             state.jwt = jwt
             state.isAuthen = true
             state.isAdmin = user.role.name === "Administration"
-            console.log(state.user);
         },
         logoutSuccess (state) {
             state.user = ""
