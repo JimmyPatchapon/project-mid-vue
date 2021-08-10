@@ -21,7 +21,6 @@ export default {
     try {
       let headers = AuthService.getApiHeader()
       let res = await Axios.post(url, body, headers)
-      console.log(res)
       if(res.status === 200) {
         return {
           success: true,

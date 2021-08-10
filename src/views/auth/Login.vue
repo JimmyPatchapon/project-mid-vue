@@ -70,7 +70,6 @@ export default {
             else{
                 this.$swal("Login Failed", res.message, "error")
             }
-            console.log(this.form);
         },
         submit() {
             this.loading = true

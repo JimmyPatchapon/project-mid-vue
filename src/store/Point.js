@@ -26,7 +26,6 @@ export default new Vuex.Store({
     },
     async fetchPointEarn({commit}){
       let res = await Axios.get(api_endpoint + "/point-earns")
-      console.log(res);
       commit('fetch', {res})
     }
   },

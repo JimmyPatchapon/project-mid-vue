@@ -15,14 +15,21 @@
     <br>
     <h1>Points Leaderboard</h1>
   </div>
+
+  <div v-if="tableIndex === -1">
+    <b-table head-variant='dark' striped outlined hover fixed :items="users" :fields="fields" class='text-left'></b-table>
+  </div>
+
   <div v-if="tableIndex === 0">
-    <b-table head-variant='dark' striped outlined hover fixed :items="users" :fields="fields1" class='text-left'></b-table>
+    <b-table head-variant='dark' striped outlined hover fixed :items="sumGained" :fields="fields1" class='text-left'></b-table>
   </div>
   <div v-if="tableIndex === 1">
     <b-table head-variant='dark' striped outlined hover fixed :items="sumHistory" :fields="fields2" class='text-left'></b-table>
   </div>
   <div class='wow'>
-    <b-button variant='info' @click="changeTable()" v-if="tableIndex === 0">Redeem Leaderboard</b-button>
+    <b-button variant='primary' @click="allUserTable()">Current Point Leaderboard</b-button>
+    <span></span>
+    <b-button variant='secondary' @click="changeTable()" v-if="tableIndex === 0 || tableIndex === -1">Redeem Leaderboard</b-button>
     <b-button variant='danger' @click="changeTable()" v-if="tableIndex === 1">Point Leaderboard</b-button>
   </div>
   
@@ -88,10 +95,13 @@ export default {
         return {
             users: [],
             pointHistory: [],
+            pointGained: [],
             sumHistory: [],
-            fields1: ['username','points'],
-            fields2: ['username','sumPoint'],
-            tableIndex: 0,
+            sumGained: [],
+            fields: ['username','points'],
+            fields1: ['username',{key:'sumPoint', label:'Point Gained'}],
+            fields2: ['username',{key:'sumPoint', label:'Point Used'}],
+            tableIndex: -1,
             form: {
               dateStart: '2021-08-01',
               dateEnd: '2021-08-10'
@@ -110,6 +120,12 @@ export default {
           this.sumAllHistory("1970-01-01","3000-12-31")
           this.sumAllHistory("1970-01-01","3000-12-31")
           this.sortSumAllHistory()
+        },
+        async fetchPointGained() {
+          await PointStore.dispatch("fetchPointEarn")
+          this.pointGained = await PointStore.getters.pointEarn
+          this.sumGainedHistory("1970-01-01","3000-12-31")
+          this.sortPointGainedHistory()          
         },
         isAuthen() {
             return AuthUser.getters.isAuthen
@@ -138,24 +154,37 @@ export default {
             this.sumHistory.sort((a,b) => {
               return b.sumPoint - a.sumPoint
             })
-        },        
+        },
+        sortPointGainedHistory() {
+            this.sumGained.sort((a,b) => {
+              return b.sumPoint - a.sumPoint
+            })
+        },       
         logSomething() {
           console.log(this.pointHistory)
         },
         changeTable() {
-          if (this.tableIndex === 0){
+          if (this.tableIndex === 0 || this.tableIndex === -1){
             this.tableIndex = 1.
             this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
             this.sortSumAllHistory()
           }
           else {
             this.tableIndex = 0;
+            this.sumGainedHistory(this.form.dateStart, this.form.dateEnd)
+            this.sortPointGainedHistory()
           }
+        },
+        allUserTable() {
+          this.tableIndex = -1
+          this.sortUsersByTotalPoints()
+          console.log(this.tableIndex);
         },
         query() {
             this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
             this.sortSumAllHistory()
-            this.tableIndex = 1
+            this.sumGainedHistory(this.form.dateStart, this.form.dateEnd)
+            this.sortPointGainedHistory()
         },
         sumAllHistory(startDate, endDate) {
             let date1 = new Date(startDate)
@@ -186,6 +215,36 @@ export default {
               })
               sum = 0
             }
+        },
+        sumGainedHistory(startDate, endDate) {
+            let date1 = new Date(startDate)
+            let date2 = new Date(endDate)
+            this.sumGained = []
+            let usernames = []
+            let sum = 0
+            for (let i = 0; i < this.users.length; i++) {
+              usernames.push(this.users[i].username)
+              
+            } 
+            for (let i = 0; i < usernames.length; i++) {
+              const e = usernames[i]; // username
+              //check if username matches the pointHistory
+              this.pointGained.forEach(element => {
+                let dateCheck = element.date
+                let date3 = new Date(dateCheck)
+                if (element.users[0].username === e && (date3.getTime() <= date2.getTime() 
+                && date3.getTime() >= date1.getTime()))
+                {
+                  sum += element.amount
+                }
+              });
+              
+              this.sumGained.push({
+                username: e,
+                sumPoint: sum
+              })
+              sum = 0
+            }
         }
     },
     created(){
@@ -195,6 +254,7 @@ export default {
         }
         this.fetchUsers()
         this.fetchPointHistory() 
+        this.fetchPointGained()
     }
 }
 </script>

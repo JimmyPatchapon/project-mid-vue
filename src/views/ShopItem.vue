@@ -86,7 +86,6 @@ export default {
         id: user.id,
         points: parseInt(user.points) + amount
       }
-      console.log(payload);
       await AuthUser.dispatch("editPoint", payload)
     }
   }
