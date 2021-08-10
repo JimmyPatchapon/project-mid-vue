@@ -69,6 +69,13 @@ export default new Vuex.Store({
                 }
             }
         },
+        async addEvent( { commit }, payload)
+        {
+            let res = await Axios.post(api_endpoint + "/events", payload)
+            if (res.status === 200)
+                commit("add" , { res })
+                return { success: true }
+        },
         async editEvent({commit}, payload){
             let url = `${api_endpoint}/events/${payload.id}`
             let body = {

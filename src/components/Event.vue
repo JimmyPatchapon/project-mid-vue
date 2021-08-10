@@ -27,8 +27,9 @@
                     </b-button>
                 </template>
             </b-table>
-        </div>        
-
+        </div>
+                
+        <b-button variant='primary'  to="/events/add" class="mr-1">Add Event</b-button>
       <!-- <div>
         <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'></b-table>
           
