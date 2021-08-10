@@ -12,7 +12,7 @@
           id="input-1"
           v-model="form.name_reward"
           type="text"
-          placeholder="word"
+          placeholder="Reward Name"
           required
         ></b-form-input>
       </b-form-group>
@@ -26,28 +26,21 @@
         ></b-form-input>
       </b-form-group>
 
+      <b-form-group id="input-group-3" label="Stocks" label-for="input-3">
+        <b-form-input
+          id="input-3"
+          v-model="form.stock"
+          placeholder="Enter Stock"
+          required
+        ></b-form-input>
+      </b-form-group>
+
       <b-button @click="editReward" type="submit" variant="primary">Confirm Edit</b-button>
       <span></span>
       <b-button @click="deleteReward" variant='danger'>Delete</b-button>
 
     </b-form>
   </div>
-    <!-- <div>
-      <div>
-        <label for="name_reward">Name</label>
-        <input type="text" v-model="form.name_reward">
-      </div>
-      <div>
-        <label for="require_points">Require Points</label>
-        <input type="text" v-model="form.require_points">
-      </div>
-      <div>
-        <button @click="editReward">Edit</button>
-      </div>
-      <div>
-        <button @click="deleteReward">Delete</button>
-      </div>
-    </div>  -->
   </div>
 </template>
 
@@ -60,7 +53,8 @@ export default {
       id: '',
       form: {
         name_reward: '',
-        require_points: ''
+        require_points: '',
+        stock: ''
       }
     }
   },
@@ -69,13 +63,15 @@ export default {
     let reward = await RewardService.getRewardById(this.id)
     this.form.name_reward = reward.name_reward
     this.form.require_points = reward.require_points
+    this.form.stock = reward.stock
   },
   methods: {
     async editReward() {
       let payload = {
         id: this.id,
         name_reward: this.form.name_reward,
-        require_points: this.form.require_points
+        require_points: this.form.require_points,
+        stock: parseInt(this.form.stock)
       }
       let res = await RewardApiStore.dispatch('editReward', payload)
       if(res.success) {
@@ -88,7 +84,7 @@ export default {
       let payload = {
         id: this.id
       }
-      let res = await RewardApiStore.dispatch('deleteRewaed', payload)
+      let res = await RewardApiStore.dispatch('deleteReward', payload)
       if(res.success) {
         this.$router.push("/reward")
       } else {

@@ -8,9 +8,12 @@ import Register from '@/views/auth/Register'
 import Leaderboard from "@/views/Leaderboard"
 import Shop from '@/views/Shop'
 import ShopItem from '@/views/ShopItem'
+import EditItem from '@/views/item/Edit'
 import Member from '@/views/Member'
 import Create from '@/views/reward/Create'
 import RewardEdit from '@/views/reward/Edit'
+import EventEdit from "@/views/event/EventEdit"
+import EventAdd from "@/views/event/EventAdd"
 
 
 Vue.use(VueRouter)
@@ -47,6 +50,11 @@ const routes = [
     component: ShopItem
   },
   {
+    path: '/shop/:id/edit',
+    name: 'EditItem',
+    component: EditItem
+  },
+  {
     path: '/member',
     name: 'Member',
     component: Member
@@ -70,6 +78,16 @@ const routes = [
     path: '/reward/:id/edit',
     name: 'RewardEdit',
     component: RewardEdit
+  },
+  {
+    path: '/events/:id/edit',
+    name: 'EventEdit',
+    component: EventEdit
+  },
+  {
+    path: '/events/add',
+    name: 'Event Add',
+    component: EventAdd
   }
 ]
 

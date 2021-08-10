@@ -3,16 +3,33 @@
       <h1 class='text-center'>Event</h1>
       <h2 class='text-center'>Total: {{ points }}</h2>
       <br>
-        <div class='wow'>
-            <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'>
+        <div class='wow' v-if="isAdmin()">
+            <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-center'>
                 <template #cell(earn)=row>
-                    <b-button variant='warning' size="sm" :disabled="buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
+                    <b-button variant='warning' size="sm" :disabled="!buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
+                        Earn
+                    </b-button>
+                </template>
+
+                <template #cell(edit)=row>
+                    <b-button :to='`/events/${events[row.index].id}/edit`' variant='danger' size="sm" class="mr-1">
+                        Edit
+                    </b-button>
+                </template>
+            </b-table>
+        </div>
+
+        <div class='wow' v-if="!isAdmin()">
+            <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields2" class='text-center'>
+                <template #cell(earn)=row>
+                    <b-button variant='warning' size="sm" :disabled="!buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
                         Earn
                     </b-button>
                 </template>
             </b-table>
-            
         </div>
+                
+        <b-button variant='primary'  to="/events/add" class="mr-1">Add Event</b-button>
       <!-- <div>
         <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'></b-table>
           
@@ -41,7 +58,7 @@
 </template>
 
 <script>
-import EventListApi from "@/store/EventListApi"
+import EventListApi from "@/store/eventListApi"
 import AuthUser from "@/store/AuthUser"
 import UserApi from "@/store/UsersApi"
 import EventService from "@/services/EventService"
@@ -49,7 +66,8 @@ import AuthService from "@/services/AuthService"
 export default {
     data(){
         return{
-            fields:['event_name','total','earn_point','earn'],
+            fields:['event_name',{key:'total', label:'Require Points'},'earn_point','earn','edit'],
+            fields2:['event_name',{key:'total', label:'Require Points'},'earn_point','earn'],
             events:[],
             points:"",
             id:"",
@@ -63,6 +81,17 @@ export default {
         this.getPoint()
     },
     methods:{
+        isAdmin() {
+            if (AuthUser.getters.user.role !== undefined) {
+                if (AuthUser.getters.user.role.name === "Administration") {
+                return true
+                } else {
+                return false
+                }
+            } else {
+                return false
+            }
+        },
         async fetchEventList(){
             await EventListApi.dispatch("fetchEventList")
             this.events = EventListApi.getters.events
@@ -89,7 +118,7 @@ export default {
                 id:this.events[index].id,
                 event_name: this.events[index].event_name,
                 earn_point: this.events[index].earn_point,
-                button: this.events[index].button
+                button: true
             }   
             await EventListApi.dispatch("buttonDisable", payload)
             this.fetchEventList()
