@@ -11,6 +11,7 @@ import ShopItem from '@/views/ShopItem'
 import Member from '@/views/Member'
 import Create from '@/views/reward/Create'
 import RewardEdit from '@/views/reward/Edit'
+import EventEdit from "@/views/event/EventEdit"
 
 
 Vue.use(VueRouter)
@@ -70,6 +71,11 @@ const routes = [
     path: '/reward/:id/edit',
     name: 'RewardEdit',
     component: RewardEdit
+  },
+  {
+    path: '/events/:id/edit',
+    name: 'EventEdit',
+    component: EventEdit
   }
 ]
 

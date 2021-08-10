@@ -5,7 +5,6 @@ import AuthUser from '../store/AuthUser'
 const api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
 
 export default {
-
   async earnPoint(Name, amount) {
     let url = api_endpoint + "/point-earns"
     let user = AuthUser.getters.user
@@ -43,6 +42,14 @@ export default {
           message: "Unknown error: " + e.response.data
         }
       }
+    }
+  },
+  async getEventById(id) {
+    try {
+        let res = await Axios.get(`${api_endpoint}/events/${id}`)
+        return res.data
+    } catch(e) {
+
     }
   }
 }
