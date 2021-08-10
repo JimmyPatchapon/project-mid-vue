@@ -41,8 +41,10 @@ export default new Vuex.Store({
             let url = `${api_endpoint}/rewards/${payload.id}`
             let body = {
                 name_reward: payload.name_reward,
-                require_points: payload.require_points
+                require_points: payload.require_points,
+                stock: parseInt(payload.stock)
             }
+            console.log(body);
             try {
                 let headers = AuthService.getApiHeader()
                 let res = await Axios.put(url, body, headers)
