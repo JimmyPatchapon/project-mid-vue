@@ -27,7 +27,7 @@
             </b-card-text>
 
             <b-button :to='`/shop/${id}`' variant="success">Buy</b-button>
-            <b-button :to='`/shop/${id}/edit`' variant="danger" style="margin-left: 10px">Edit</b-button>
+            <b-button v-if="isAdmin()" :to='`/shop/${id}/edit`' variant="danger" style="margin-left: 10px">Edit</b-button>
           </b-card>
       </b-col>
 </div>
@@ -36,6 +36,7 @@
 
 <script>
 import ItemStore from '@/store/Item'
+import AuthUser from '@/store/AuthUser'
 export default {
   props: ["name",'src','msg','id'],
   data() {
