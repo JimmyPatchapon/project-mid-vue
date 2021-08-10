@@ -14,15 +14,13 @@ export default {
     let user = AuthUser.getters.user
     let body ={
       users: user.id,
-      detail: "exchange reward with reward: " + Name,
+      detail: "Exchange reward with reward: " + Name,
       amount: amount,
       date: (new Date()).toISOString().slice(0,10)
     }
-    console.log(body);
     try {
       let headers = AuthService.getApiHeader()
       let res = await Axios.post(url, body, headers)
-      console.log(res)
       if(res.status === 200) {
         return {
           success: true,

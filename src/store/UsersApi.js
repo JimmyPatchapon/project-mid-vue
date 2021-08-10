@@ -21,7 +21,6 @@ export default new Vuex.Store({
           state.data.push(payload)
       },
       edit(state, index, data) {
-        console.log(data);
           state.data[index] = data
       },
   },

@@ -1,7 +1,41 @@
 <template>
   <div>
-    <h1>Register</h1>
-    <form @submit.prevent="register">
+    <h1 class='text-center'>Register</h1>
+      <div class='login text-center'>
+    <b-form @submit.prevent="submit" class='smallform'>
+      <b-form-group
+        id="input-group-1"
+        label="Username"
+        label-for="input-1"
+      >
+    <b-form-input id="input-1" v-model="form.username" type="text" placeholder="Enter Username" required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Password" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.email"
+          type='email'
+          placeholder="Enter Email"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-3" label="Password" label-for="input-3">
+        <b-form-input
+          id="input-3"
+          v-model="form.password"
+          type='password'
+          placeholder="Enter Password"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-button type="warning" variant="primary">Register</b-button>
+    </b-form>
+      </div>
+    <!-- <form @submit.prevent="register">
       <div>
         <label for="username">Username</label>
         <input v-model="form.username" type="text" autocomplete="off" placeholder="username">
@@ -14,14 +48,10 @@
         <label for="password">Password</label>
         <input v-model="form.password" type="password">
       </div>
-      <!-- <div>
-        <label for="password_confirmation">Confirm Password</label>
-        <input type="password">
-      </div> -->
       <div>
         <button type="submit">Register</button>
       </div>
-    </form>
+    </form> -->
   </div>
 </template>
 
@@ -34,7 +64,8 @@ export default {
         username: '',
         email: '',
         password: ''
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -46,11 +77,23 @@ export default {
       } else {
         this.$swal("Register Failed", res.message, "error")
       }
+    },
+    submit() {
+      this.loading = true
+      this.register()
+      this.loading = false
     }
   }
 }
 </script>
 
-<style>
-
+<style lang='scss' scoped>
+.login,h1 {
+  margin: auto;
+  width: 40%;
+}
+.smallform {
+    margin: auto;
+    width: 50%
+}
 </style>

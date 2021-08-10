@@ -55,7 +55,6 @@ export default new Vuex.Store({
         },
         async editPoint({commit}, payload){
             let res = await AuthService.update(payload)
-            console.log(res);
             if(res.success){
                 commit("loginSuccess",res.user,res.jwt)
             }

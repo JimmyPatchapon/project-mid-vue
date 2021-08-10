@@ -127,7 +127,6 @@ export default{
         }
     },
     async update( payload ) {
-        console.log(payload)
         try {
             // let url = api_endpoint + "/users/" + id
             let url = `${api_endpoint}/users/${payload.id}`
@@ -137,7 +136,6 @@ export default{
             }
             let headers = this.getApiHeader()
             let res = await Axios.put(url, body, headers)
-            console.log(res);
             let newData = {
                 jwt: this.jwt,
                 user: res.data

@@ -1,7 +1,38 @@
 <template>
-  <div>
+  <div class='text-center'>
     <h1>Edit Reward {{ id }}</h1>
-    <div>
+      <div class='percent66'>
+    <b-form @submit.stop.prevent>
+      <b-form-group
+        id="input-group-1"
+        label="Reward Name"
+        label-for="input-1"
+      >
+        <b-form-input
+          id="input-1"
+          v-model="form.name_reward"
+          type="text"
+          placeholder="word"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Require Points to Redeem" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.require_points"
+          placeholder="Enter Required Points"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-button @click="editReward" type="submit" variant="primary">Confirm Edit</b-button>
+      <span></span>
+      <b-button @click="deleteReward" variant='danger'>Delete</b-button>
+
+    </b-form>
+  </div>
+    <!-- <div>
       <div>
         <label for="name_reward">Name</label>
         <input type="text" v-model="form.name_reward">
@@ -16,7 +47,7 @@
       <div>
         <button @click="deleteReward">Delete</button>
       </div>
-    </div>
+    </div>  -->
   </div>
 </template>
 
@@ -68,6 +99,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='scss' scoped>
+  span {
+    margin-right: 5px;
+  }
+  .percent66 {
+    margin: auto;
+    width: 66%
+  }
 </style>
