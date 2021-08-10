@@ -178,7 +178,6 @@ export default {
         allUserTable() {
           this.tableIndex = -1
           this.sortUsersByTotalPoints()
-          console.log(this.tableIndex);
         },
         query() {
             this.sumAllHistory(this.form.dateStart, this.form.dateEnd)
