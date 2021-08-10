@@ -6,7 +6,7 @@
         <div class='wow'>
             <b-table head-variant='dark' striped outlined hover fixed :items="events" :fields="fields" class='text-left'>
                 <template #cell(earn)=row>
-                    <b-button variant='warning' size="sm" disabled="buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
+                    <b-button variant='warning' size="sm" :disabled="buttonDisable(row.index)" @click="earn(row.index)" class="mr-1">
                         Earn
                     </b-button>
                 </template>
@@ -71,7 +71,7 @@ export default {
             this.points = parseInt(AuthUser.getters.user.points)
         },
         earn(index){
-            if(this.events[index].total<=AuthUser.getters.user.accumulativePoints){
+            if(this.events[index].total<=AuthUser.getters.user.points){
                 this.points+=this.events[index].earn_point
                 this.$swal("Complete","Earn point from "+this.events[index].event_name,"success")
                 this.events[index].button = true
