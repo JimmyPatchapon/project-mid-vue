@@ -93,7 +93,7 @@ export default {
             this.points = AuthUser.getters.user.points
         },
         redeem(index){
-            if(this.points>=this.rewards[index].require_points){
+            if(this.points>=this.rewards[index].require_points && this.rewards[index].stock>0){
                 this.points-=this.rewards[index].require_points 
                 this.usePoint(index)
                 this.$swal("Redeem Success", "", "success")
@@ -105,7 +105,8 @@ export default {
         async usePoint(index) {
             let payload = {
                 id: AuthUser.getters.user.id,
-                points: this.points
+                points: this.points,
+                stock: this.this.rewards[index].stock - 1
             }
             await AuthUser.dispatch("editPoint", payload)
             await RewardService.redeemPoint(this.rewards[index].name_reward, this.rewards[index].require_points)
