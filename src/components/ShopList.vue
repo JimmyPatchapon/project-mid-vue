@@ -27,6 +27,7 @@
             </b-card-text>
 
             <b-button :to='`/shop/${id}`' variant="success">Buy</b-button>
+            <b-button :to='`/shop/${id}/edit`' variant="danger" style="margin-left: 10px">Edit</b-button>
           </b-card>
       </b-col>
 </div>
@@ -39,7 +40,10 @@ export default {
   props: ["name",'src','msg','id'],
   data() {
     return {
-      items: []
+      items: [],
+      form: {
+        
+      }
     }
   },
   created() {
@@ -53,6 +57,17 @@ export default {
     createUrl(pictureUrl) {
       let api_endpoint = process.env.VUE_APP_API_ENDPOINT || "http://localhost:1337"
       return api_endpoint + pictureUrl
+    },
+    isAdmin() {
+      if(AuthUser.getters.user.role !== undefined) {
+        if(AuthUser.getters.user.role.name === "Administration") {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
     }
   }
 }

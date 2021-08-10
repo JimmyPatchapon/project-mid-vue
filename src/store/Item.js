@@ -62,6 +62,45 @@ export default new Vuex.Store({
           }
         }
       }
+    },
+    async editItem({commit}, payload) {
+      let url = `${api_endpoint}/items/${payload.id}`
+      let body = {
+        name: payload.name,
+        prices: payload.prices,
+        details: payload.details,
+        quantity: payload.quantity
+      }
+      try {
+        let headers = AuthService.getApiHeader()
+        let res = await Axios.put(url, body, headers)
+        if(res.status === 200) {
+          commit("edit", payload.index, res.data)
+          return {
+            success: true,
+            data: res.data
+          }
+        } else {
+          console.error(res)
+          return {
+            success: false,
+            message: "Unknown status code: " + res.status
+          }
+        }
+      } catch(e) {
+        if(e.response.status === 403) {
+          console.error(e.response.data.message)
+          return {
+            success: false,
+            message: e.response.data.message
+          }
+        } else {
+          return {
+            success: false,
+            message: "Unknown error: " + e.response.data.message
+          }
+        }
+      }
     }
   },
   modules: {
