@@ -54,7 +54,7 @@ export default {
         this.number--
     },
     async buy() {
-      if(this.item.quantity>0){
+      if(this.item.quantity>0 && this.number<this.item.quantity){
         let user = AuthUser.getters.user
         let points = Math.floor(this.item.prices*this.number/100)
         let payload = {
